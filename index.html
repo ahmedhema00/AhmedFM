@@ -3,137 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Ahmed FM | راديو أحمد</title>
-
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        body {
-            background: #0f0f0f;
-            color: white;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            text-align: center;
-            padding-top: 40px;
-            margin: 0;
-            direction: rtl;
-        }
+        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding-top: 40px; margin: 0; direction: rtl; }
+        .player-container { background: #1c1c1c; padding: 40px; border-radius: 30px; max-width: 700px; margin: auto; box-shadow: 0 0 40px rgba(0,0,0,0.6); border: 1px solid #333; }
+        h1 { font-size: 50px; margin-bottom: 5px; color: #fff; }
+        p { font-size: 18px; opacity: 0.7; margin-bottom: 30px; direction: ltr; }
+        .live-status { font-size: 24px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
+        .live-on { color:#ff3b3b; animation: blink 1s infinite; }
+        
+        /* تنسيق المشغل */
+        .cstrEmbed { margin-top: 20px; border-radius: 15px; overflow: hidden; width: 100%; transform: scale(1.1); }
+        /* تصغير لينكات الحقوق عشان البث يشتغل وما تشوهش المنظر */
+        .cstrEmbed a { font-size: 10px !important; color: #444 !important; text-decoration: none !important; opacity: 0.5; }
 
-        h1 {
-            font-size: 50px;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            color: #fff;
-        }
-
-        p {
-            font-size: 18px;
-            opacity: 0.7;
-            margin-bottom: 30px;
-            direction: ltr;
-        }
-
-        /* الحاوية الرئيسية */
-        .player-container {
-            background: #1c1c1c;
-            padding: 40px;
-            border-radius: 30px;
-            max-width: 700px;
-            margin: auto;
-            box-shadow: 0 0 40px rgba(0,0,0,0.6);
-            border: 1px solid #333;
-        }
-
-        /* حالة البث */
-        .live-status {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        @keyframes blink {
-            0% {opacity:1;}
-            50% {opacity:0.3;}
-            100% {opacity:1;}
-        }
-
-        .live-on {
-            color:#ff3b3b;
-            animation: blink 1s infinite;
-        }
-
-        /* widget */
-        .cstrEmbed {
-            margin-top: 20px;
-            border-radius: 15px;
-            overflow: hidden;
-            width: 100%;
-            transform: scale(1.1);
-            transform-origin: center;
-        }
-
-        /* الوقت */
-        .time-box {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #ddd;
-            background: #111;
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 10px;
-            direction: ltr;
-        }
-
-        /* السوشيال */
-        .social-title {
-            margin-top: 30px;
-            font-size: 16px;
-            color: #bbb;
-        }
-
-        .social {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .social a {
-            text-decoration: none;
-            color: white;
-            background: #222;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-
-        .social a:hover {
-            background: #ff3b3b;
-        }
-
-        /* حاوية التعليقات */
-        #disqus_thread {
-            margin: 40px auto;
-            max-width: 700px;
-            background: #1c1c1c;
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid #333;
-        }
+        .time-box { margin-top: 20px; font-size: 18px; background: #111; display: inline-block; padding: 8px 15px; border-radius: 10px; direction: ltr; }
+        .social { margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .social a { text-decoration: none; color: white; background: #222; padding: 10px 18px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .social a:hover { background: #ff3b3b; }
+        #disqus_thread { margin: 40px auto; max-width: 700px; background: #1c1c1c; padding: 20px; border-radius: 20px; border: 1px solid #333; }
     </style>
 </head>
-
 <body>
 
     <div class="player-container">
@@ -150,19 +44,16 @@
              data-theme="light"
              data-color="e81e4d"
              data-rendered="false">
-            <a href="https://www.caster.fm">Radio Hosting</a>
+            <a href="https://www.caster.fm">Radio Hosting</a> | 
+            <a href="https://www.caster.fm">Free Media Stream</a>
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
 
-        <div class="social-title">تواصل معنا</div>
+        <div style="margin-top:30px; color:#bbb;">تواصل معنا</div>
         <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank">
-                <i class="fab fa-facebook"></i> Facebook
-            </a>
-            <a href="https://wa.me/201027415909" target="_blank">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
+            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
     </div>
 
@@ -171,21 +62,20 @@
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
 
     <script>
-        // 1. نظام الإنعاش التلقائي (زي راديو مصر)
+        // نظام الإنعاش التلقائي المطور
         document.addEventListener("visibilitychange", function() {
             if (document.visibilityState === 'visible') {
-                console.log("Welcome back! Refreshing stream...");
-                // إعادة تحميل الـ Widget برفق لضمان سحب البث الجديد
                 const wrapper = document.getElementById('radio-wrapper');
                 if(wrapper) {
-                    // حيلة بسيطة لإجبار المتصفح على إعادة الاتصال
-                    const currentHTML = wrapper.innerHTML;
-                    wrapper.innerHTML = currentHTML;
+                    // تحديث بسيط للمشغل بدون ريفريش للصفحة
+                    wrapper.setAttribute('data-rendered', 'false');
+                    if (window.CasterJS) window.CasterJS.loadWidgets(); 
+                    // لو الطريقة اللي فوق منفعش، بنعمل ريفريش للمكان بس
+                    setTimeout(() => { location.reload(); }, 500); 
                 }
             }
         });
 
-        // 2. تحديث الوقت
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
@@ -193,7 +83,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // 3. إعدادات Disqus
+        // إعدادات Disqus
         var disqus_config = function () {
             this.page.url = window.location.href;  
             this.page.identifier = 'ahmedfm_main'; 
@@ -205,6 +95,5 @@
             (d.head || d.body).appendChild(s);
         })();
     </script>
-
 </body>
 </html>
