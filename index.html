@@ -9,22 +9,28 @@
 
     <style>
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding-top: 40px; margin: 0; direction: rtl; }
-        .player-container { background: #1c1c1c; padding: 40px; border-radius: 30px; max-width: 700px; margin: auto; box-shadow: 0 0 40px rgba(0,0,0,0.6); border: 1px solid #333; }
+        .player-container { background: #1c1c1c; padding: 40px; border-radius: 30px; max-width: 600px; margin: auto; box-shadow: 0 0 40px rgba(0,0,0,0.6); border: 1px solid #333; box-sizing: border-box; }
         h1 { font-size: 50px; margin-bottom: 5px; color: #fff; }
         p { font-size: 18px; opacity: 0.7; margin-bottom: 30px; direction: ltr; }
         .live-status { font-size: 24px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 12px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; }
         
-        /* تنسيق المشغل */
-        .cstrEmbed { margin-top: 25px; border-radius: 15px; overflow: hidden; width: 100%; transform: scale(1.2); transform-origin: center; }
+        /* تنسيق المشغل المظبوط */
+        .cstrEmbed { 
+            margin-top: 25px; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            width: 100%; /* عشان يفضل جوه الحدود */
+            box-sizing: border-box;
+        }
         .cstrEmbed a { font-size: 12px !important; color: #777 !important; text-decoration: none !important; display: inline-block !important; margin: 10px 5px; }
 
         .time-box { margin-top: 25px; font-size: 20px; font-weight: bold; color: #ddd; background: #111; display: inline-block; padding: 10px 18px; border-radius: 10px; direction: ltr; }
-        .social { margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #222; padding: 12px 16px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .social { margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .social a { text-decoration: none; color: white; background: #222; padding: 10px 15px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; }
         .social a:hover { background: #ff3b3b; }
-        #disqus_thread { margin: 40px auto; max-width: 700px; background: #1c1c1c; padding: 20px; border-radius: 20px; border: 1px solid #333; }
+        #disqus_thread { margin: 40px auto; max-width: 600px; background: #1c1c1c; padding: 20px; border-radius: 20px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -51,7 +57,7 @@
 
         <div class="time-box" id="time">🕒 --:--:--</div>
 
-        <div style="margin-top:35px; color:#bbb;">تواصل معنا</div>
+        <div style="margin-top:35px; color:#bbb; font-size: 14px;">تواصل معنا</div>
         <div class="social">
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -68,7 +74,6 @@
             if (document.visibilityState === 'visible') {
                 const wrapper = document.getElementById('radio-wrapper');
                 if(wrapper && window.CasterJS) {
-                    // إعادة تشغيل الـ Widget فقط عند العودة للصفحة
                     window.CasterJS.loadWidgets();
                 }
             }
