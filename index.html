@@ -17,13 +17,12 @@
         .live-on { color:#ff3b3b; animation: blink 1s infinite; }
         
         /* تنسيق المشغل */
-        .cstrEmbed { margin-top: 20px; border-radius: 15px; overflow: hidden; width: 100%; transform: scale(1.1); }
-        /* تصغير لينكات الحقوق عشان البث يشتغل وما تشوهش المنظر */
-        .cstrEmbed a { font-size: 10px !important; color: #444 !important; text-decoration: none !important; opacity: 0.5; }
+        .cstrEmbed { margin-top: 25px; border-radius: 15px; overflow: hidden; width: 100%; transform: scale(1.2); transform-origin: center; }
+        .cstrEmbed a { font-size: 12px !important; color: #777 !important; text-decoration: none !important; display: inline-block !important; margin: 10px 5px; }
 
-        .time-box { margin-top: 20px; font-size: 18px; background: #111; display: inline-block; padding: 8px 15px; border-radius: 10px; direction: ltr; }
+        .time-box { margin-top: 25px; font-size: 20px; font-weight: bold; color: #ddd; background: #111; display: inline-block; padding: 10px 18px; border-radius: 10px; direction: ltr; }
         .social { margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #222; padding: 10px 18px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .social a { text-decoration: none; color: white; background: #222; padding: 12px 16px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .social a:hover { background: #ff3b3b; }
         #disqus_thread { margin: 40px auto; max-width: 700px; background: #1c1c1c; padding: 20px; border-radius: 20px; border: 1px solid #333; }
     </style>
@@ -38,19 +37,21 @@
             <span id="liveLight" class="live-on" style="font-size:32px;">●</span> LIVE
         </div>
 
-        <div id="radio-wrapper" class="cstrEmbed" 
-             data-type="newStreamPlayer"
+        <div id="radio-wrapper" data-type="newStreamPlayer"
              data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c"
              data-theme="light"
              data-color="e81e4d"
-             data-rendered="false">
-            <a href="https://www.caster.fm">Radio Hosting</a> | 
-            <a href="https://www.caster.fm">Free Media Stream</a>
+             data-channelId=""
+             data-rendered="false"
+             class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
 
-        <div style="margin-top:30px; color:#bbb;">تواصل معنا</div>
+        <div style="margin-top:35px; color:#bbb;">تواصل معنا</div>
         <div class="social">
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -62,16 +63,13 @@
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
 
     <script>
-        // نظام الإنعاش التلقائي المطور
+        // نظام الإنعاش التلقائي
         document.addEventListener("visibilitychange", function() {
             if (document.visibilityState === 'visible') {
                 const wrapper = document.getElementById('radio-wrapper');
-                if(wrapper) {
-                    // تحديث بسيط للمشغل بدون ريفريش للصفحة
-                    wrapper.setAttribute('data-rendered', 'false');
-                    if (window.CasterJS) window.CasterJS.loadWidgets(); 
-                    // لو الطريقة اللي فوق منفعش، بنعمل ريفريش للمكان بس
-                    setTimeout(() => { location.reload(); }, 500); 
+                if(wrapper && window.CasterJS) {
+                    // إعادة تشغيل الـ Widget فقط عند العودة للصفحة
+                    window.CasterJS.loadWidgets();
                 }
             }
         });
