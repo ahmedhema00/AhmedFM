@@ -44,6 +44,28 @@
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
+        // كود التحكم في الإشعارات (Media Session)
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: 'Ahmed FM | بث مباشر',
+                artist: 'أحمد إبراهيم نصار',
+                album: 'راديو أحمد إف إم',
+                artwork: [
+                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+
+            // ربط أزرار الإشعارات بالأكشن
+            navigator.mediaSession.setActionHandler('play', function() {
+                // محاكاة ضغط تشغيل في المشغل
+                console.log("Play requested via notification");
+            });
+            navigator.mediaSession.setActionHandler('pause', function() {
+                console.log("Pause requested via notification");
+            });
+        }
+
         // كود تشغيل الـ Service Worker للتثبيت كتطبيق
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
