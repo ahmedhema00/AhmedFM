@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmed FM | راديو أحمد</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 40px 10px; margin: 0; direction: rtl; }
@@ -40,8 +41,18 @@
         </div>
     </div>
     <div id="disqus_thread"></div>
+
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
+        // كود تشغيل الـ Service Worker للتثبيت كتطبيق
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker Registered'))
+                .catch(err => console.log('Service Worker Error', err));
+            });
+        }
+
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
