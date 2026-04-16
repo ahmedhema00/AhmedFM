@@ -7,26 +7,9 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* التعديل العام لتقليل حجم الصفحة بالكامل 10% */
-        html {
-            transform: scale(0.9);
-            transform-origin: top center;
-            width: 111.11%; 
-            margin-left: -5.55%;
-            height: 111.11%;
-        }
-
-        body { 
-            background: #0f0f0f; 
-            color: white; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            text-align: center; 
-            padding: 20px 10px; 
-            margin: 0; 
-            direction: rtl; 
-            overflow-x: hidden;
-        }
+        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; }
         
+        /* بانر التثبيت العايم (Overlay) */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -45,45 +28,20 @@
             box-sizing: border-box;
             backdrop-filter: blur(10px);
         }
+        #installBanner .banner-text { font-size: 13px; font-weight: 500; text-align: right; }
+        #installBanner .banner-actions { display: flex; align-items: center; gap: 12px; }
+        #installBtn { background: #ff3b3b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        #closeBanner { cursor: pointer; font-size: 22px; line-height: 1; color: #888; }
 
-        .player-container { 
-            background: #1c1c1c; 
-            padding: 50px 25px; 
-            border-radius: 40px; 
-            width: 95%; 
-            max-width: 900px; 
-            margin: 20px auto; 
-            box-shadow: 0 0 60px rgba(0,0,0,0.8); 
-            border: 1px solid #333; 
-            box-sizing: border-box; 
-            position: relative; 
-        }
-
+        .player-container { background: #1c1c1c; padding: 50px 25px; border-radius: 40px; width: 95%; max-width: 900px; margin: 20px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
         h1 { font-size: clamp(40px, 10vw, 65px); margin-bottom: 10px; color: #fff; }
         p { font-size: clamp(18px, 4vw, 24px); opacity: 0.7; margin-bottom: 40px; direction: ltr; }
-        
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
-
-        /* تعديل الـ Widget مع قفل الارتفاع (Lock) لإظهار شريط الصوت */
-        .cstrEmbed { 
-            margin: 15px auto; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            width: 100%; 
-            box-sizing: border-box; 
-            background: #fff;
-            /* تثبيت الارتفاع لضمان ظهور أزرار الصوت والتحكم */
-            height: 200px !important;
-            max-height: 200px !important;
-        }
-        .cstrEmbed iframe {
-            height: 100% !important;
-            width: 100% !important;
-        }
-
-        .time-box { margin-top: 30px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
+        .cstrEmbed { margin-top: 15px; border-radius: 20px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+        .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
+        .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 15px 30px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 18px; min-width: 150px; justify-content: center; }
         .social a:hover { background: #ff3b3b; }
@@ -104,13 +62,13 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
-        
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
-
         <div class="time-box" id="time">🕒 --:--:--</div>
-        <div style="margin-top:40px; color:#bbb; font-size: 18px;">Contact The Host</div>
+        <div style="margin-top:50px; color:#bbb; font-size: 18px;">Contact The Host</div>
         <div class="social">
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -120,6 +78,59 @@
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+        const closeBanner = document.getElementById('closeBanner');
+
+        function shouldShowBanner() {
+            const lastClose = localStorage.getItem('bannerClosedDate');
+            if (!lastClose) return true;
+            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+            return (new Date().getTime() - lastClose) > threeDaysInMs;
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (shouldShowBanner()) {
+                installBanner.style.display = 'flex';
+            }
+        });
+
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((result) => {
+                    installBanner.style.display = 'none';
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        closeBanner.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            localStorage.setItem('bannerClosedDate', new Date().getTime());
+        });
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: 'Ahmed FM | Live',
+                artist: 'Live As You Love',
+                album: 'Radio Ahmed FM',
+                artwork: [
+                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
+            });
+        }
+
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
@@ -127,26 +138,10 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Install Banner Logic
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBanner').style.display = 'flex';
-        });
-
-        document.getElementById('installBtn').addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                document.getElementById('installBanner').style.display = 'none';
-            }
-        });
-
-        document.getElementById('closeBanner').addEventListener('click', () => {
-            document.getElementById('installBanner').style.display = 'none';
-        });
-
-        // Disqus
+        var disqus_config = function () {
+            this.page.url = window.location.href;  
+            this.page.identifier = 'ahmedfm_main'; 
+        };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
