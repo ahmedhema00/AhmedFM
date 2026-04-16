@@ -1,157 +1,181 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ahmed FM | راديو أحمد</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        :root {
-            --scale: 0.75;
-        }
-        
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
-        
-        /* بانر التثبيت العايم (Overlay) */
-        #installBanner {
-            display: none;
-            background: rgba(28, 28, 28, 0.95);
-            color: white;
-            padding: 10px 12px;
-            position: fixed;
-            top: 10px;
-            left: 3%;
-            width: 94%;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border: 1px solid #ff3b3b;
-            border-radius: 15px;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-        #installBanner .banner-text { font-size: 12px; font-weight: 500; text-align: right; }
-        #installBanner .banner-actions { display: flex; align-items: center; gap: 10px; }
-        #installBtn { background: #ff3b3b; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
-        #closeBanner { cursor: pointer; font-size: 20px; line-height: 1; color: #888; }
+<path>/workspace/0e24be2f-b5a2-4211-8481-34ea65a5b1ed/sessions/agent_53d0792d-ce26-42bd-abc5-13a3983d1364/index.html</path>
+<type>file</type>
+<content>1: <!DOCTYPE html>
+2: <html lang="ar">
+3: <head>
+4:     <meta charset="UTF-8">
+5:     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+6:     <title>Ahmed FM | راديو أحمد</title>
+7:     <link rel="manifest" href="manifest.json">
+8:     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+9:     <style>
+10:         :root {
+11:             --scale: 0.75;
+12:         }
+13:         
+14:         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+15:         
+16:         /* بانر التثبيت العايم (Overlay) */
+17:         #installBanner {
+18:             display: none;
+19:             background: rgba(28, 28, 28, 0.95);
+20:             color: white;
+21:             padding: 10px 12px;
+22:             position: fixed;
+23:             top: 10px;
+24:             left: 3%;
+25:             width: 94%;
+26:             z-index: 9999;
+27:             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+28:             border: 1px solid #ff3b3b;
+29:             border-radius: 15px;
+30:             align-items: center;
+31:             justify-content: space-between;
+32:             box-sizing: border-box;
+33:             backdrop-filter: blur(10px);
+34:         }
+35:         #installBanner .banner-text { font-size: 12px; font-weight: 500; text-align: right; }
+36:         #installBanner .banner-actions { display: flex; align-items: center; gap: 10px; }
+37:         #installBtn { background: #ff3b3b; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+38:         #closeBanner { cursor: pointer; font-size: 20px; line-height: 1; color: #888; }
+39: 
+40:         .player-container { background: #1c1c1c; padding: calc(30px * var(--scale)) calc(18px * var(--scale)); border-radius: 25px; width: 95%; max-width: 900px; margin: 15px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
+41:         h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
+42:         p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
+43:         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+44:         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
+45:         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 26px; }
+46:         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+47:         .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
+48:         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+49:         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+50:         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
+51:         .social a:hover { background: #ff3b3b; }
+52:         #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
+53:         
+54:         .volume-container { margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+55:         .volume-container i { font-size: 18px; color: #888; }
+56:         .volume-slider { -webkit-appearance: none; appearance: none; width: 120px; height: 6px; background: #333; border-radius: 10px; outline: none; }
+57:         .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: #ff3b3b; border-radius: 50%; cursor: pointer; }
+58:         .volume-slider::-moz-range-thumb { width: 18px; height: 18px; background: #ff3b3b; border-radius: 50%; cursor: pointer; border: none; }
+59:     </style>
+60: </head>
+61: <body>
+62: 
+63:     <div id="installBanner">
+64:         <span class="banner-text">📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
+65:         <div class="banner-actions">
+66:             <button id="installBtn">تثبيت</button>
+67:             <span id="closeBanner">&times;</span>
+68:         </div>
+69:     </div>
+70: 
+71:     <div class="player-container">
+72:         <h1>🎙️ Ahmed FM</h1>
+73:         <p>Live Radio Station</p>
+74:         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+75:         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+76:             <a href="https://www.caster.fm">Shoutcast Hosting</a>
+77:             <a href="https://www.caster.fm">Stream Hosting</a>
+78:             <a href="https://www.caster.fm">Radio Server Hosting</a>
+79:         </div>
+80:         <div class="time-box" id="time">🕒 --:--:--</div>
+81:         <div class="volume-container">
+82:             <i class="fas fa-volume-down"></i>
+83:             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
+84:             <i class="fas fa-volume-up"></i>
+85:         </div>
+86:         <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
+87:         <div class="social">
+88:             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+89:             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+90:         </div>
+91:     </div>
+92:     <div id="disqus_thread"></div>
+93: 
+94:     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
+95:     <script>
+96:         let deferredPrompt;
+97:         const installBanner = document.getElementById('installBanner');
+98:         const installBtn = document.getElementById('installBtn');
+99:         const closeBanner = document.getElementById('closeBanner');
+100: 
+101:         function shouldShowBanner() {
+102:             const lastClose = localStorage.getItem('bannerClosedDate');
+103:             if (!lastClose) return true;
+104:             const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+105:             return (new Date().getTime() - lastClose) > threeDaysInMs;
+106:         }
+107: 
+108:         window.addEventListener('beforeinstallprompt', (e) => {
+109:             e.preventDefault();
+110:             deferredPrompt = e;
+111:             if (shouldShowBanner()) {
+112:                 installBanner.style.display = 'flex';
+113:             }
+114:         });
+115: 
+116:         installBtn.addEventListener('click', () => {
+117:             if (deferredPrompt) {
+118:                 deferredPrompt.prompt();
+119:                 deferredPrompt.userChoice.then((result) => {
+120:                     installBanner.style.display = 'none';
+121:                     deferredPrompt = null;
+122:                 });
+123:             }
+124:         });
+125: 
+126:         closeBanner.addEventListener('click', () => {
+127:             installBanner.style.display = 'none';
+128:             localStorage.setItem('bannerClosedDate', new Date().getTime());
+129:         });
+130: 
+131:         if ('mediaSession' in navigator) {
+132:             navigator.mediaSession.metadata = new MediaMetadata({
+133:                 title: 'Ahmed FM | Live',
+134:                 artist: 'Live As You Love',
+135:                 album: 'Radio Ahmed FM',
+136:                 artwork: [
+137:                     { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+138:                     { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+139:                 ]
+140:             });
+141:         }
+142: 
+143:         if ('serviceWorker' in navigator) {
+144:             window.addEventListener('load', () => {
+145:                 navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
+146:             });
+147:         }
+148: 
+149:         function updateTime() {
+150:             const now = new Date();
+151:             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
+152:         }
+153:         setInterval(updateTime, 1000);
+154:         updateTime();
+155: 
+156:         const streamUrl = 'http://sapircast.caster.fm:12076/gMbi7';
+157:         const audio = new Audio(streamUrl);
+158:         audio.volume = 0.8;
+159:         
+160:         const volumeSlider = document.getElementById('volumeSlider');
+161:         volumeSlider.addEventListener('input', function() {
+162:             audio.volume = this.value / 100;
+163:         });
+164:         
+165:         document.body.addEventListener('click', function() {
+166:             if (audio.paused) {
+167:                 audio.play().catch(e => console.log('Playback failed:', e));
+168:             }
+169:         }, { once: true });
+170: 
+171:         var disqus_config = function () {
+172:             this.page.url = window.location.href;  
+173:             this.page.identifier = 'ahmedfm_main'; 
+174:         };
+175:         (function() { 
+176:             var d = document, s = d.createElement('script');
+177:             s.src = 'https://ahmedfm
 
-        .player-container { background: #1c1c1c; padding: calc(30px * var(--scale)) calc(18px * var(--scale)); border-radius: 25px; width: 95%; max-width: 900px; margin: 15px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
-        h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
-        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
-        .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
-        .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 26px; }
-        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
-        .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
-        .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
-        .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
-        .social a:hover { background: #ff3b3b; }
-        #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
-    </style>
-</head>
-<body>
-
-    <div id="installBanner">
-        <span class="banner-text">📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
-        <div class="banner-actions">
-            <button id="installBtn">تثبيت</button>
-            <span id="closeBanner">&times;</span>
-        </div>
-    </div>
-
-    <div class="player-container">
-        <h1>🎙️ Ahmed FM</h1>
-        <p>Live Radio Station</p>
-        <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
-        </div>
-        <div class="time-box" id="time">🕒 --:--:--</div>
-        <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
-        <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
-    </div>
-    <div id="disqus_thread"></div>
-
-    <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
-    <script>
-        let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
-        const closeBanner = document.getElementById('closeBanner');
-
-        function shouldShowBanner() {
-            const lastClose = localStorage.getItem('bannerClosedDate');
-            if (!lastClose) return true;
-            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
-            return (new Date().getTime() - lastClose) > threeDaysInMs;
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (shouldShowBanner()) {
-                installBanner.style.display = 'flex';
-            }
-        });
-
-        installBtn.addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((result) => {
-                    installBanner.style.display = 'none';
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        closeBanner.addEventListener('click', () => {
-            installBanner.style.display = 'none';
-            localStorage.setItem('bannerClosedDate', new Date().getTime());
-        });
-
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: 'Ahmed FM | Live',
-                artist: 'Live As You Love',
-                album: 'Radio Ahmed FM',
-                artwork: [
-                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
-                ]
-            });
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
-            });
-        }
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'ahmedfm_main'; 
-        };
-        (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://ahmedfm.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-</body>
-</html>
+[…truncated]
