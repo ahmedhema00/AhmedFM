@@ -39,7 +39,7 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
 
-        /* 👇 التعديل النهائي */
+        /* 👇 الحل النهائي */
         .cstrEmbed { 
             margin-top: 15px; 
             border-radius: 20px; 
@@ -47,19 +47,16 @@
             box-sizing: border-box; 
             background: #fff;
 
-            height: 240px;
-            min-height: 240px;
-            max-height: 240px;
-
+            height: 170px;
             overflow: hidden;
             position: relative;
         }
 
         .cstrEmbed iframe,
         .cstrEmbed div {
-            height: 240px !important;
-            min-height: 240px !important;
-            max-height: 240px !important;
+            position: relative;
+            top: -60px;
+            height: 260px !important;
         }
 
         .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
