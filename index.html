@@ -2,122 +2,63 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmed FM | راديو أحمد</title>
-    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* تصغير العناصر المحيطة فقط والحفاظ على الـ Widget طبيعية */
-        body { 
-            background: #0f0f0f; 
-            color: white; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            text-align: center; 
-            padding: 10px; 
-            margin: 0; 
-            direction: rtl; 
-            overflow-x: hidden;
-            width: 100%;
-        }
+        /* رجعنا للأصول: ممنوع Zoom أو Scale على مستوى الصفحة */
+        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; margin: 0; padding: 10px; direction: rtl; overflow-x: hidden; }
         
-        #installBanner {
-            display: none;
-            background: rgba(28, 28, 28, 0.95);
-            color: white;
-            padding: 12px 15px;
-            position: fixed;
-            top: 10px;
-            left: 2.5%;
-            width: 95%;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border: 1px solid #ff3b3b;
-            border-radius: 20px;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
         .player-container { 
             background: #1c1c1c; 
             padding: 30px 15px; 
             border-radius: 35px; 
-            width: 96%; 
+            width: 95%; 
             max-width: 800px; 
-            margin: 10px auto; 
+            margin: 20px auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
-            box-sizing: border-box;
-            /* تصغير الحاوية نفسها بدل الصفحة كلها */
-            transform: scale(0.95);
-            transform-origin: top center;
+            box-sizing: border-box; 
         }
 
-        h1 { font-size: clamp(30px, 7vw, 50px); margin-bottom: 5px; color: #fff; }
-        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
+        h1 { font-size: clamp(35px, 8vw, 55px); margin-bottom: 5px; }
+        p { font-size: 18px; opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
-        .live-status { font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
-        .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 25px; }
-
-        /* منطقة الـ Widget: ممنوع اللعب في الـ Scale بتاعها */
+        /* أهم جزء: الـ Widget لازم تكون براحتها تماماً */
         .cstrEmbed { 
-            margin: 10px auto; 
+            margin: 15px 0; 
             border-radius: 15px; 
             overflow: hidden; 
-            width: 100%; 
-            background: #fff;
-            min-height: 150px; /* ارتفاع ثابت ومريح للسكريبت */
-            display: block;
+            background: #fff; 
+            min-height: 140px; /* الارتفاع المثالي لظهور المشغل */
+            width: 100% !important;
         }
-        
-        .time-box { margin-top: 25px; font-size: clamp(18px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
-        
-        .social { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #282828; padding: 10px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 15px; min-width: 120px; justify-content: center; }
-        .social a:hover { background: #ff3b3b; }
 
-        #disqus_thread { 
-            margin: 20px auto; 
-            width: 96%; 
-            max-width: 800px; 
-            background: #1c1c1c; 
-            padding: 15px; 
-            border-radius: 25px; 
-            border: 1px solid #333; 
-            box-sizing: border-box;
-            transform: scale(0.95);
-            transform-origin: top center;
-        }
+        .time-box { margin-top: 25px; font-size: 24px; font-weight: bold; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        .social { margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .social a { text-decoration: none; color: white; background: #282828; padding: 12px 25px; border-radius: 12px; font-size: 16px; min-width: 130px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        #disqus_thread { margin: 30px auto; width: 95%; max-width: 800px; background: #1c1c1c; padding: 20px; border-radius: 30px; border: 1px solid #333; }
     </style>
 </head>
 <body>
 
-    <div id="installBanner">
-        <span class="banner-text">📻 ثبت تطبيق أحمد FM</span>
-        <div class="banner-actions">
-            <button id="installBtn">تثبيت</button>
-            <span id="closeBanner">&times;</span>
-        </div>
-    </div>
-
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
-        <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
         
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
-        <div style="margin-top:30px; color:#bbb; font-size: 16px;">Contact The Host</div>
+        <div style="margin-top:40px; color:#bbb;">Contact The Host</div>
         <div class="social">
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
         </div>
     </div>
+
     <div id="disqus_thread"></div>
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
@@ -129,28 +70,6 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBanner').style.display = 'flex';
-        });
-
-        document.getElementById('installBtn').addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                document.getElementById('installBanner').style.display = 'none';
-            }
-        });
-
-        document.getElementById('closeBanner').addEventListener('click', () => {
-            document.getElementById('installBanner').style.display = 'none';
-        });
-
-        var disqus_config = function () {
-            this.page.url = window.location.href;
-            this.page.identifier = 'ahmedfm_main';
-        };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
