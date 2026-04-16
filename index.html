@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -6,47 +7,45 @@
     <title>Ahmed FM | راديو أحمد</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-
         body { 
             background: #0f0f0f; 
             color: white; 
             font-family: 'Segoe UI', Arial, sans-serif; 
             text-align: center; 
-            padding: 10px; /* كان 20 */
+            padding: 10px; 
             margin: 0; 
             direction: rtl; 
         }
-        
+
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
             color: white;
             padding: 12px 15px;
             position: fixed;
-            top: 10px; /* كان 20 */
+            top: 10px;
             left: 2.5%;
             width: 95%;
             z-index: 9999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             border: 1px solid #ff3b3b;
             border-radius: 20px;
-            align-items: center;
+            display: flex;
             justify-content: space-between;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
+            align-items: center;
         }
 
         .player-container { 
             background: #1c1c1c; 
-            padding: 40px 20px; /* كان 50px 25px */
+            padding: 40px 20px; 
             border-radius: 35px; 
-            width: 98%; /* كان 95% */
-            max-width: 850px; /* كان 900 */
-            margin: 10px auto; /* كان 20 */
+            width: 98%; 
+            max-width: 850px; 
+            margin: 10px auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
-            box-sizing: border-box; 
         }
 
         h1 { font-size: clamp(35px, 8vw, 55px); margin-bottom: 5px; }
@@ -65,7 +64,7 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 30px; }
 
-        /* ⚠️ سيبنا الـ widget زي ما هي 100% */
+        /* ❌ متلمسناش الـ widget */
         .cstrEmbed { 
             margin-top: 15px; 
             border-radius: 20px; 
@@ -90,21 +89,21 @@
             display: flex; 
             justify-content: center; 
             gap: 15px; 
-            flex-wrap: wrap; 
+            flex-wrap: nowrap;
         }
 
         .social a { 
             text-decoration: none; 
             color: white; 
             background: #282828; 
-            padding: 12px 25px; 
+            padding: 12px 20px; 
             border-radius: 15px; 
             transition: 0.3s; 
             display: flex; 
             align-items: center; 
             gap: 10px; 
-            font-size: 16px; 
-            min-width: 130px; 
+            font-size: 15px; 
+            min-width: 120px; 
             justify-content: center; 
         }
 
@@ -118,16 +117,15 @@
             padding: 20px; 
             border-radius: 30px; 
             border: 1px solid #333; 
-            box-sizing: border-box; 
         }
-
     </style>
 </head>
+
 <body>
 
     <div id="installBanner">
-        <span class="banner-text">📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
-        <div class="banner-actions">
+        <span>📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
+        <div>
             <button id="installBtn">تثبيت</button>
             <span id="closeBanner">&times;</span>
         </div>
@@ -136,28 +134,63 @@
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
-        <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
 
-        <!-- ❌ متلمسناش أي حاجة هنا -->
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        <div class="live-status">
+            <span class="live-on">●</span> LIVE
+        </div>
+
+        <!-- 🔥 الـ Widget زي ما هو -->
+        <div class="cstrEmbed"
+             data-type="newStreamPlayer"
+             data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c"
+             data-theme="light"
+             data-color="e81e4d"
+             data-channelId=""
+             data-rendered="false">
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
 
-        <div style="margin-top:40px; color:#bbb; font-size: 17px;">Contact The Host</div>
+        <div style="margin-top:40px; color:#bbb;">Contact The Host</div>
 
         <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://www.facebook.com/ana09090" target="_blank">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://wa.me/201027415909" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
         </div>
     </div>
 
     <div id="disqus_thread"></div>
 
+    <!-- 🎧 Widget Script -->
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
+
+    <script>
+        // ⏰ الساعة
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // 📩 Disqus
+        var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = 'ahmedfm_main';
+        };
+
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ahmedfm.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
 
 </body>
 </html>
+```
