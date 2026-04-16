@@ -39,7 +39,24 @@
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
-        .cstrEmbed { margin-top: 15px; border-radius: 20px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+
+        /* --- التعديل المطلوب: تثبيت عرض المشغل --- */
+        .cstrEmbed { 
+            margin-top: 15px; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 100%; /* ضمان عدم الخروج عن حاوية الصفحة */
+            box-sizing: border-box; 
+            background: #fff; 
+            overflow: hidden; /* أي نص زيادة هيتقص بدل ما يمط المربع */
+            display: block;
+        }
+        /* لجعل محتوى كاستر الداخلي يحترم العرض الثابت */
+        .cstrEmbed iframe, .cstrEmbed div {
+            max-width: 100% !important;
+        }
+        /* ----------------------------------------- */
+
         .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
         .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
