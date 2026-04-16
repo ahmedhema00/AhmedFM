@@ -39,7 +39,43 @@
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
-        .cstrEmbed { margin-top: 15px; border-radius: 20px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+
+        /* --- التعديلات الجديدة لمشغل كاستر --- */
+        .cstrEmbed { 
+            margin-top: 15px; 
+            border-radius: 20px; 
+            overflow: hidden !important; 
+            width: 100%; 
+            box-sizing: border-box; 
+            background: #fff;
+            /* تثبيت الارتفاع لمنع المربع من التمطط */
+            height: 320px !important; 
+            max-height: 320px !important;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* تحويل النص لحركة Slide */
+        /* استهداف العناصر التي تحتوي على معلومات البث داخل الويدجت */
+        .cstrEmbed span, .cstrEmbed div {
+            white-space: nowrap !important; /* منع النص من النزول لسطر جديد */
+        }
+
+        /* عمل تأثير الـ Marquee للنص الطويل */
+        /* ملاحظة: كاستر يستخدم كلاسات متغيرة، هذا الكود يستهدف حاويات النص */
+        .cstrEmbed [id*="song"], .cstrEmbed [class*="song-title"] {
+            display: inline-block;
+            padding-right: 100%;
+            animation: moveText 15s linear infinite;
+        }
+
+        @keyframes moveText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        /* --- نهاية تعديلات المشغل --- */
+
         .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
         .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
@@ -62,11 +98,13 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+        
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
             <a href="https://www.caster.fm">Shoutcast Hosting</a>
             <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
+
         <div class="time-box" id="time">🕒 --:--:--</div>
         <div style="margin-top:50px; color:#bbb; font-size: 18px;">Contact The Host</div>
         <div class="social">
