@@ -7,7 +7,15 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; }
+        /* إضافة الـ Scale العام هنا لتقليل حجم الصفحة بالكامل */
+        html {
+            transform: scale(0.9);
+            transform-origin: top center;
+            width: 111.11%; /* تعويض فرق الـ scale للحفاظ على العرض الكامل */
+            margin-left: -5.55%; /* موازنة الصفحة في المنتصف */
+        }
+
+        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; overflow-x: hidden; }
         
         /* بانر التثبيت العايم (Overlay) */
         #installBanner {
@@ -112,24 +120,6 @@
             installBanner.style.display = 'none';
             localStorage.setItem('bannerClosedDate', new Date().getTime());
         });
-
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: 'Ahmed FM | Live',
-                artist: 'Live As You Love',
-                album: 'Radio Ahmed FM',
-                artwork: [
-                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
-                ]
-            });
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
-            });
-        }
 
         function updateTime() {
             const now = new Date();
