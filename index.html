@@ -7,10 +7,10 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* التعديل هنا: تصغير عام بنسبة 90% مع ضمان ملء الشاشة */
+        /* تصغير الصفحة كلها ماعدا الـ Widget عشان متضربش */
         html {
-            zoom: 0.9; /* تصغير هادئ يحافظ على التنسيق */
-            -moz-transform: scale(0.9); /* للدعم في فايبرفوكس */
+            zoom: 0.9;
+            -moz-transform: scale(0.9);
             -moz-transform-origin: top center;
         }
 
@@ -22,11 +22,10 @@
             padding: 10px; 
             margin: 0; 
             direction: rtl; 
-            overflow-x: hidden; /* منع السكرول الجانبي نهائياً */
+            overflow-x: hidden;
             width: 100%;
         }
         
-        /* بانر التثبيت */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -46,12 +45,11 @@
             backdrop-filter: blur(10px);
         }
 
-        /* الحاوية الرئيسية: خليتها عرض مرن عشان تملأ الموبايل */
         .player-container { 
             background: #1c1c1c; 
             padding: 40px 20px; 
             border-radius: 35px; 
-            width: 98%; /* تملأ الشاشة في الموبايل */
+            width: 98%; 
             max-width: 850px; 
             margin: 10px auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
@@ -66,15 +64,15 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 30px; }
 
-        /* الـ Widget: حافظت على كود كاستر الأصلي عشان ميضربش */
+        /* حماية الـ Widget من الـ Zoom عشان تظهر */
         .cstrEmbed { 
-            margin-top: 10px; 
+            margin: 15px auto; 
             border-radius: 20px; 
             overflow: hidden; 
             width: 100%; 
-            box-sizing: border-box; 
             background: #fff;
-            min-height: 120px; /* لضمان عدم اختفاء المحتوى */
+            min-height: 140px; /* زيادة بسيطة عشان الـ Script يشتغل براحته */
+            zoom: 1.11; /* عكس تأثير الـ 0.9 بتاع الصفحة عشان ترجع لحجمها الطبيعي وتظهر */
         }
         
         .time-box { margin-top: 30px; font-size: clamp(20px, 4.5vw, 25px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 12px 30px; border-radius: 15px; direction: ltr; }
@@ -83,7 +81,17 @@
         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 25px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 16px; min-width: 130px; justify-content: center; }
         .social a:hover { background: #ff3b3b; }
 
-        #disqus_thread { margin: 30px auto; width: 98%; max-width: 850px; background: #1c1c1c; padding: 20px; border-radius: 30px; border: 1px solid #333; box-sizing: border-box; }
+        #disqus_thread { 
+            margin: 30px auto; 
+            width: 98%; 
+            max-width: 850px; 
+            background: #1c1c1c; 
+            padding: 20px; 
+            border-radius: 30px; 
+            border: 1px solid #333; 
+            box-sizing: border-box; 
+            zoom: 1.11; /* تصحيح حجم الديسكاس برضه عشان ميبقاش صغير زيادة */
+        }
     </style>
 </head>
 <body>
@@ -116,7 +124,6 @@
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // ساعة البث
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
@@ -124,7 +131,6 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // منطق تثبيت التطبيق
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -143,7 +149,11 @@
             document.getElementById('installBanner').style.display = 'none';
         });
 
-        // Disqus
+        // Disqus Config
+        var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = 'ahmedfm_main';
+        };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
