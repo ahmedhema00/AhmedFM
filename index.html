@@ -28,18 +28,13 @@
             box-sizing: border-box;
             backdrop-filter: blur(10px);
         }
-        #installBanner .banner-text { font-size: 13px; font-weight: 500; text-align: right; }
-        #installBanner .banner-actions { display: flex; align-items: center; gap: 12px; }
-        #installBtn { background: #ff3b3b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        #closeBanner { cursor: pointer; font-size: 22px; line-height: 1; color: #888; }
 
-        /* الحاوية الرئيسية (تم تعديل العرض ليناسب الـ Widget الكبيرة) */
         .player-container { 
             background: #1c1c1c; 
             padding: 50px 25px; 
             border-radius: 40px; 
             width: 95%; 
-            max-width: 720px; /* تم التعديل ليتناسب مع كودك الأخير */
+            max-width: 800px; /* رجعنا للعرض المتوازن */
             margin: 20px auto; 
             box-shadow: 0 0 60px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
@@ -47,27 +42,32 @@
             position: relative; 
         }
 
-        h1 { font-size: clamp(40px, 10vw, 60px); margin-bottom: 10px; color: #fff; }
-        p { font-size: clamp(18px, 4vw, 20px); opacity: 0.7; margin-bottom: 40px; direction: ltr; }
-        .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        h1 { font-size: clamp(40px, 10vw, 65px); margin-bottom: 10px; color: #fff; }
+        p { font-size: clamp(18px, 4vw, 24px); opacity: 0.7; margin-bottom: 40px; direction: ltr; }
         
+        .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
 
-        /* --- واجهة كاستر (بالظبط كما في كودك الأخير) --- */
+        /* --- عمل Lock لارتفاع واجهة كاستر --- */
         .cstrEmbed { 
-            margin-top: 25px; 
-            border-radius: 15px; 
-            overflow: hidden; 
+            margin-top: 15px; 
+            border-radius: 20px; 
+            overflow: hidden; /* أهم حاجة عشان تعمل Lock */
             width: 100%; 
-            transform: scale(1.2); /* التكبير اللي طلبته */
-            transform-origin: center;
-            background: #fff;
+            box-sizing: border-box; 
+            background: #fff; 
+            /* تثبيت الارتفاع لمنع التمدد مع اسم الأغنية */
+            height: 200px !important; 
+            max-height: 200px !important; 
         }
-        .cstrEmbed a { font-size: 12px !important; color: #777 !important; text-decoration: none !important; display: inline-block !important; margin: 10px 5px; }
-        /* ------------------------------------------- */
+        .cstrEmbed iframe {
+            height: 100% !important;
+            width: 100% !important;
+        }
+        /* ------------------------------------- */
 
-        .time-box { margin-top: 60px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
+        .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 15px 30px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 18px; min-width: 150px; justify-content: center; }
         .social a:hover { background: #ff3b3b; }
@@ -90,8 +90,6 @@
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
         
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
@@ -102,12 +100,10 @@
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
     </div>
-
     <div id="disqus_thread"></div>
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // كل السكربتات (الوقت، البانر، ديسكاس، ميديا سيشن) موجودة هنا
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
@@ -115,6 +111,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
+        // Install Banner Logic
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -134,10 +131,6 @@
         });
 
         // Disqus
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'ahmedfm_main'; 
-        };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
