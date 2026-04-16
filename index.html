@@ -9,6 +9,7 @@
     <style>
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; }
         
+        /* بانر التثبيت العايم (Overlay) */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -38,22 +39,8 @@
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
-
-        /* التعديل الذهبي هنا: ضبط الارتفاع بدقة لمنع السلايد والفرغات */
-        .cstrEmbed { 
-            margin-top: 15px; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            width: 100%; 
-            box-sizing: border-box; 
-            background: #fff;
-            height: 190px !important; /* ارتفاع محدد يظهر الـ Play مباشرة */
-        }
-        .cstrEmbed iframe {
-            height: 100% !important;
-            width: 100% !important;
-        }
-
+        .cstrEmbed { margin-top: 15px; border-radius: 20px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+        .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
         .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 15px 30px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 18px; min-width: 150px; justify-content: center; }
@@ -75,11 +62,11 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
-        
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
-
         <div class="time-box" id="time">🕒 --:--:--</div>
         <div style="margin-top:50px; color:#bbb; font-size: 18px;">Contact The Host</div>
         <div class="social">
@@ -99,19 +86,22 @@
         function shouldShowBanner() {
             const lastClose = localStorage.getItem('bannerClosedDate');
             if (!lastClose) return true;
-            return (new Date().getTime() - lastClose) > (3 * 24 * 60 * 60 * 1000);
+            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+            return (new Date().getTime() - lastClose) > threeDaysInMs;
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            if (shouldShowBanner()) installBanner.style.display = 'flex';
+            if (shouldShowBanner()) {
+                installBanner.style.display = 'flex';
+            }
         });
 
         installBtn.addEventListener('click', () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
+                deferredPrompt.userChoice.then((result) => {
                     installBanner.style.display = 'none';
                     deferredPrompt = null;
                 });
@@ -122,6 +112,24 @@
             installBanner.style.display = 'none';
             localStorage.setItem('bannerClosedDate', new Date().getTime());
         });
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: 'Ahmed FM | Live',
+                artist: 'Live As You Love',
+                album: 'Radio Ahmed FM',
+                artwork: [
+                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
+            });
+        }
 
         function updateTime() {
             const now = new Date();
