@@ -13,6 +13,7 @@
         
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         
+        /* بانر التثبيت العايم (Overlay) */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -42,16 +43,8 @@
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 26px; }
-        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; aspect-ratio: 16/9; }
-        .cstrEmbed iframe { width: 100% !important; height: 100% !important; border: none; }
+        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
         .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
-        
-        .volume-container { margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        .volume-container i { font-size: 18px; color: #888; }
-        .volume-slider { -webkit-appearance: none; appearance: none; width: 120px; height: 6px; background: #333; border-radius: 10px; outline: none; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: #ff3b3b; border-radius: 50%; cursor: pointer; }
-        .volume-slider::-moz-range-thumb { width: 18px; height: 18px; background: #ff3b3b; border-radius: 50%; cursor: pointer; border: none; }
-        
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
@@ -79,11 +72,6 @@
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
         <div class="time-box" id="time">🕒 --:--:--</div>
-        <div class="volume-container">
-            <i class="fas fa-volume-down"></i>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
-            <i class="fas fa-volume-up"></i>
-        </div>
         <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
         <div class="social">
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
@@ -153,21 +141,6 @@
         }
         setInterval(updateTime, 1000);
         updateTime();
-
-        const streamUrl = 'http://sapircast.caster.fm:12076/gMbi7';
-        const audio = new Audio(streamUrl);
-        audio.volume = 0.8;
-        
-        const volumeSlider = document.getElementById('volumeSlider');
-        volumeSlider.addEventListener('input', function() {
-            audio.volume = this.value / 100;
-        });
-        
-        document.body.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play().catch(e => console.log('Playback failed:', e));
-            }
-        }, { once: true });
 
         var disqus_config = function () {
             this.page.url = window.location.href;  
