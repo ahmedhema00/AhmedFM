@@ -9,7 +9,6 @@
     <style>
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; }
         
-        /* بانر التثبيت العايم (Overlay) */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -39,8 +38,29 @@
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
-        .cstrEmbed { margin-top: 15px; border-radius: 20px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
-        .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
+
+        /* التعديل الجوهري لتحويل الـ Widget للشكل العرضي (الكمبيوتر) */
+        .cstrEmbed { 
+            margin: 15px auto; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            background: #fff;
+            width: 100%;
+            height: 90px; /* تقليل الارتفاع ليناسب الشكل العرضي */
+            position: relative;
+        }
+
+        /* إجبار محتوى كاستر على العرض العرضي */
+        .cstrEmbed iframe {
+            width: 130% !important; /* تكبير العرض الوهمي */
+            height: 130% !important;
+            transform: scale(0.75); /* تصغير الحجم ليعود لمساحة الشاشة */
+            transform-origin: top left;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 15px 30px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 18px; min-width: 150px; justify-content: center; }
@@ -62,11 +82,11 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+        
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
+
         <div class="time-box" id="time">🕒 --:--:--</div>
         <div style="margin-top:50px; color:#bbb; font-size: 18px;">Contact The Host</div>
         <div class="social">
@@ -138,10 +158,6 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'ahmedfm_main'; 
-        };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
