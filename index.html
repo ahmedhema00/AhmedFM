@@ -7,32 +7,33 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 40px 10px; margin: 0; direction: rtl; }
+        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; direction: rtl; }
         
-        /* استايل بانر التثبيت الذكي */
+        /* بانر التثبيت العايم (Overlay) */
         #installBanner {
             display: none;
-            background: #1c1c1c;
+            background: rgba(28, 28, 28, 0.95);
             color: white;
             padding: 12px 15px;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-            border-bottom: 2px solid #ff3b3b;
+            top: 20px;
+            left: 5%;
+            width: 90%;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid #ff3b3b;
+            border-radius: 20px;
             align-items: center;
             justify-content: space-between;
             box-sizing: border-box;
+            backdrop-filter: blur(10px);
         }
-        #installBanner .banner-text { font-size: 14px; font-weight: 500; }
-        #installBanner .banner-actions { display: flex; align-items: center; gap: 15px; }
-        #installBtn { background: #ff3b3b; color: white; border: none; padding: 7px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 13px; }
-        #closeBanner { cursor: pointer; font-size: 24px; line-height: 1; color: #888; transition: 0.3s; }
-        #closeBanner:hover { color: white; }
+        #installBanner .banner-text { font-size: 13px; font-weight: 500; text-align: right; }
+        #installBanner .banner-actions { display: flex; align-items: center; gap: 12px; }
+        #installBtn { background: #ff3b3b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        #closeBanner { cursor: pointer; font-size: 22px; line-height: 1; color: #888; }
 
-        .player-container { background: #1c1c1c; padding: 50px 25px; border-radius: 40px; width: 95%; max-width: 900px; margin: 30px auto 0; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; }
+        .player-container { background: #1c1c1c; padding: 50px 25px; border-radius: 40px; width: 95%; max-width: 900px; margin: 20px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
         h1 { font-size: clamp(40px, 10vw, 65px); margin-bottom: 10px; color: #fff; }
         p { font-size: clamp(18px, 4vw, 24px); opacity: 0.7; margin-bottom: 40px; direction: ltr; }
         .live-status { font-size: 28px; font-weight: bold; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px; }
@@ -52,8 +53,8 @@
     <div id="installBanner">
         <span class="banner-text">📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
         <div class="banner-actions">
-            <button id="installBtn">تثبيت الآن</button>
-            <span id="closeBanner" title="إغلاق">&times;</span>
+            <button id="installBtn">تثبيت</button>
+            <span id="closeBanner">&times;</span>
         </div>
     </div>
 
@@ -82,20 +83,16 @@
         const installBtn = document.getElementById('installBtn');
         const closeBanner = document.getElementById('closeBanner');
 
-        // دالة للتحقق من مرور 3 أيام
         function shouldShowBanner() {
             const lastClose = localStorage.getItem('bannerClosedDate');
             if (!lastClose) return true;
-
             const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
-            const now = new Date().getTime();
-            return (now - lastClose) > threeDaysInMs;
+            return (new Date().getTime() - lastClose) > threeDaysInMs;
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            // إظهار البانر فقط لو مر 3 أيام على آخر إغلاق
             if (shouldShowBanner()) {
                 installBanner.style.display = 'flex';
             }
@@ -104,10 +101,7 @@
         installBtn.addEventListener('click', () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install');
-                    }
+                deferredPrompt.userChoice.then((result) => {
                     installBanner.style.display = 'none';
                     deferredPrompt = null;
                 });
@@ -116,11 +110,9 @@
 
         closeBanner.addEventListener('click', () => {
             installBanner.style.display = 'none';
-            // حفظ وقت الإغلاق في ذاكرة المتصفح
             localStorage.setItem('bannerClosedDate', new Date().getTime());
         });
 
-        // Media Session Metadata
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: 'Ahmed FM | Live',
@@ -133,12 +125,9 @@
             });
         }
 
-        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                .then(reg => console.log('Service Worker Registered'))
-                .catch(err => console.error('Service Worker Error', err));
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
             });
         }
 
