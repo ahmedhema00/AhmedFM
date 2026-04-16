@@ -7,13 +7,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* تصغير الصفحة كلها ماعدا الـ Widget عشان متضربش */
-        html {
-            zoom: 0.9;
-            -moz-transform: scale(0.9);
-            -moz-transform-origin: top center;
-        }
-
+        /* تصغير العناصر المحيطة فقط والحفاظ على الـ Widget طبيعية */
         body { 
             background: #0f0f0f; 
             color: white; 
@@ -47,57 +41,61 @@
 
         .player-container { 
             background: #1c1c1c; 
-            padding: 40px 20px; 
+            padding: 30px 15px; 
             border-radius: 35px; 
-            width: 98%; 
-            max-width: 850px; 
+            width: 96%; 
+            max-width: 800px; 
             margin: 10px auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
-            box-sizing: border-box; 
+            box-sizing: border-box;
+            /* تصغير الحاوية نفسها بدل الصفحة كلها */
+            transform: scale(0.95);
+            transform-origin: top center;
         }
 
-        h1 { font-size: clamp(35px, 8vw, 55px); margin-bottom: 5px; color: #fff; }
-        p { font-size: clamp(16px, 3.5vw, 20px); opacity: 0.7; margin-bottom: 30px; direction: ltr; }
+        h1 { font-size: clamp(30px, 7vw, 50px); margin-bottom: 5px; color: #fff; }
+        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
-        .live-status { font-size: 24px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .live-status { font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
-        .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 30px; }
+        .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 25px; }
 
-        /* حماية الـ Widget من الـ Zoom عشان تظهر */
+        /* منطقة الـ Widget: ممنوع اللعب في الـ Scale بتاعها */
         .cstrEmbed { 
-            margin: 15px auto; 
-            border-radius: 20px; 
+            margin: 10px auto; 
+            border-radius: 15px; 
             overflow: hidden; 
             width: 100%; 
             background: #fff;
-            min-height: 140px; /* زيادة بسيطة عشان الـ Script يشتغل براحته */
-            zoom: 1.11; /* عكس تأثير الـ 0.9 بتاع الصفحة عشان ترجع لحجمها الطبيعي وتظهر */
+            min-height: 150px; /* ارتفاع ثابت ومريح للسكريبت */
+            display: block;
         }
         
-        .time-box { margin-top: 30px; font-size: clamp(20px, 4.5vw, 25px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 12px 30px; border-radius: 15px; direction: ltr; }
+        .time-box { margin-top: 25px; font-size: clamp(18px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         
-        .social { margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #282828; padding: 12px 25px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 16px; min-width: 130px; justify-content: center; }
+        .social { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .social a { text-decoration: none; color: white; background: #282828; padding: 10px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 15px; min-width: 120px; justify-content: center; }
         .social a:hover { background: #ff3b3b; }
 
         #disqus_thread { 
-            margin: 30px auto; 
-            width: 98%; 
-            max-width: 850px; 
+            margin: 20px auto; 
+            width: 96%; 
+            max-width: 800px; 
             background: #1c1c1c; 
-            padding: 20px; 
-            border-radius: 30px; 
+            padding: 15px; 
+            border-radius: 25px; 
             border: 1px solid #333; 
-            box-sizing: border-box; 
-            zoom: 1.11; /* تصحيح حجم الديسكاس برضه عشان ميبقاش صغير زيادة */
+            box-sizing: border-box;
+            transform: scale(0.95);
+            transform-origin: top center;
         }
     </style>
 </head>
 <body>
 
     <div id="installBanner">
-        <span class="banner-text">📻 استمع بجودة أفضل.. ثبّت تطبيق أحمد FM</span>
+        <span class="banner-text">📻 ثبت تطبيق أحمد FM</span>
         <div class="banner-actions">
             <button id="installBtn">تثبيت</button>
             <span id="closeBanner">&times;</span>
@@ -114,10 +112,10 @@
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
-        <div style="margin-top:40px; color:#bbb; font-size: 17px;">Contact The Host</div>
+        <div style="margin-top:30px; color:#bbb; font-size: 16px;">Contact The Host</div>
         <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
         </div>
     </div>
     <div id="disqus_thread"></div>
@@ -149,7 +147,6 @@
             document.getElementById('installBanner').style.display = 'none';
         });
 
-        // Disqus Config
         var disqus_config = function () {
             this.page.url = window.location.href;
             this.page.identifier = 'ahmedfm_main';
