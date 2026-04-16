@@ -27,10 +27,6 @@
             box-sizing: border-box;
             backdrop-filter: blur(10px);
         }
-        #installBanner .banner-text { font-size: 13px; font-weight: 500; text-align: right; }
-        #installBanner .banner-actions { display: flex; align-items: center; gap: 12px; }
-        #installBtn { background: #ff3b3b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        #closeBanner { cursor: pointer; font-size: 22px; line-height: 1; color: #888; }
 
         .player-container { background: #1c1c1c; padding: 50px 25px; border-radius: 40px; width: 95%; max-width: 900px; margin: 20px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
         h1 { font-size: clamp(40px, 10vw, 65px); margin-bottom: 10px; color: #fff; }
@@ -39,39 +35,31 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 35px; }
 
-        /* --- التعديل الجوهري لمشغل كاستر --- */
+        /* --- الحل النهائي لمشكلة التمطط --- */
         .cstrEmbed { 
             margin-top: 15px; 
             border-radius: 20px; 
-            overflow: hidden !important; 
-            width: 100%; 
             background: #fff;
             position: relative;
-            display: block;
-            height: auto !important; /* يرجع لحجمه الطبيعي */
+            /* منع المربع إنه يطول مهما حصل */
+            max-width: 100%;
+            overflow: hidden !important; 
         }
 
-        /* منع التمطط وإخفاء أي نص يخرج عن الحدود */
-        .cstrEmbed * {
-            white-space: nowrap !important;
-            overflow: hidden;
-            text-overflow: clip;
+        /* استهداف اسم الأغنية داخل المشغل وجعله يتحرك slide */
+        /* الكود ده هيبحث عن أي نص طويل داخل المشغل ويحركه */
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
         }
 
-        /* كلاس الحركة اللي هنضيفه بالسكربت */
-        .marquee-active {
-            display: inline-block !important;
-            animation: slideText 12s linear infinite;
-            padding-left: 20px;
-        }
-
-        @keyframes slideText {
-            0% { transform: translateX(0%); }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-        /* --- نهاية التعديل --- */
+        /* ---------------------------------- */
 
-        .cstrEmbed a { font-size: 13px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 12px 8px; }
         .time-box { margin-top: 40px; font-size: clamp(22px, 5vw, 28px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 15px 35px; border-radius: 15px; direction: ltr; }
         .social { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 15px 30px; border-radius: 15px; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 18px; min-width: 150px; justify-content: center; }
@@ -95,7 +83,7 @@
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
         
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
         <div class="time-box" id="time">🕒 --:--:--</div>
@@ -109,64 +97,26 @@
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // سكربت مراقبة النص وتحريكه
-        function handleScrollingText() {
-            // استهداف العناصر اللي فيها اسم الأغنية داخل كاستر
-            const textElements = document.querySelectorAll('.cstrEmbed div, .cstrEmbed b, .cstrEmbed span');
-            
-            textElements.forEach(el => {
-                // التأكد إن العنصر يحتوي على نص طويل فعلاً
-                if (el.innerText.length > 20) { 
-                    const parentWidth = el.parentElement.offsetWidth;
-                    const textWidth = el.scrollWidth;
-
-                    if (textWidth > parentWidth && !el.classList.contains('marquee-active')) {
-                        el.classList.add('marquee-active');
-                        // تكرار النص عشان ميبقاش في فراغ كبير أثناء الحركة
-                        el.innerHTML = el.innerText + ' &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; ' + el.innerText;
-                    }
+        // سكريبت بسيط لمراقبة النصوص الطويلة داخل المشغل وتحويلها لـ Marquee
+        function fixLongNames() {
+            // بنستهدف أي حاوية نص جوه المشغل (بشكل آمن)
+            const playerItems = document.querySelectorAll('.cstrEmbed div, .cstrEmbed b, .cstrEmbed span');
+            playerItems.forEach(item => {
+                // لو النص واخد أكتر من 80% من مساحة المشغل، هنفعّل عليه الحركة
+                if (item.scrollWidth > item.clientWidth && item.clientWidth > 0) {
+                    item.style.display = 'block';
+                    item.style.overflow = 'hidden';
+                    item.style.whiteSpace = 'nowrap';
+                    item.innerHTML = `<div class="marquee-text">${item.innerText}</div>`;
                 }
             });
         }
+        
+        // تشغيل الفحص بعد ما الويدجت تحمل تماماً
+        setTimeout(fixLongNames, 5000); 
+        setInterval(fixLongNames, 10000); // تحديث كل 10 ثواني لو الأغنية اتغيرت
 
-        // تشغيل الفحص كل 3 ثواني للتأكد من تحديث الأغنية
-        setInterval(handleScrollingText, 3000);
-
-        let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
-        const closeBanner = document.getElementById('closeBanner');
-
-        function shouldShowBanner() {
-            const lastClose = localStorage.getItem('bannerClosedDate');
-            if (!lastClose) return true;
-            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
-            return (new Date().getTime() - lastClose) > threeDaysInMs;
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (shouldShowBanner()) {
-                installBanner.style.display = 'flex';
-            }
-        });
-
-        installBtn.addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    installBanner.style.display = 'none';
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        closeBanner.addEventListener('click', () => {
-            installBanner.style.display = 'none';
-            localStorage.setItem('bannerClosedDate', new Date().getTime());
-        });
-
+        // باقي سكربتات الوقت والبث
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
@@ -174,6 +124,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
+        // Disqus
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
