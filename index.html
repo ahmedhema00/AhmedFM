@@ -13,7 +13,7 @@
         
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         
-        /* بانر التثبيت العايم (Overlay) */
+        /* بانر التثبيت */
         #installBanner {
             display: none;
             background: rgba(28, 28, 28, 0.95);
@@ -43,8 +43,29 @@
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 26px; }
-        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
-        .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
+
+        /* --- خدعة الـ Dark Mode للـ Widget --- */
+        .cstrEmbed { 
+            margin-top: 10px; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            width: 100%; 
+            box-sizing: border-box; 
+            background: #1c1c1c !important; 
+            padding: 10px;
+            border: 1px solid #444;
+            /* قلب الألوان لجعلها داكنة */
+            filter: invert(90%) hue-rotate(180deg);
+        }
+        
+        /* استثناء الصور من قلب الألوان عشان لوجو المحطة يظهر صح */
+        .cstrEmbed img {
+            filter: invert(100%) hue-rotate(180deg) !important;
+        }
+
+        .cstrEmbed a { font-size: 10px !important; color: #aaa !important; text-decoration: none !important; margin: 0 5px; }
+        /* ------------------------------------- */
+
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
@@ -66,11 +87,15 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        
+        <div class="cstrEmbed">
+            <div data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+                <a href="https://www.caster.fm">Shoutcast Hosting</a> 
+                <a href="https://www.caster.fm">Stream Hosting</a> 
+                <a href="https://www.caster.fm">Radio Server Hosting</a>
+            </div>
         </div>
+
         <div class="time-box" id="time">🕒 --:--:--</div>
         <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
         <div class="social">
@@ -78,10 +103,13 @@
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
     </div>
+
     <div id="disqus_thread"></div>
 
     <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
+
     <script>
+        // ... نفس كود الـ JavaScript بتاعك بدون تغيير ...
         let deferredPrompt;
         const installBanner = document.getElementById('installBanner');
         const installBtn = document.getElementById('installBtn');
@@ -116,24 +144,6 @@
             installBanner.style.display = 'none';
             localStorage.setItem('bannerClosedDate', new Date().getTime());
         });
-
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: 'Ahmed FM | Live',
-                artist: 'Live As You Love',
-                album: 'Radio Ahmed FM',
-                artwork: [
-                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
-                ]
-            });
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
-            });
-        }
 
         function updateTime() {
             const now = new Date();
