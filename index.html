@@ -19,7 +19,6 @@
             --scale: 0.75;
         }
         
-        /* منع التحديد لجعل الموقع يبدو كتطبيق أصلي */
         * {
             -webkit-tap-highlight-color: transparent;
             user-select: none;
@@ -41,7 +40,6 @@
             padding-top: env(safe-area-inset-top);
         }
         
-        /* بانر التثبيت - يظهر فقط في المتصفح العادي */
         #installBanner {
             display: none;
             background: rgba(30, 30, 30, 0.95);
@@ -115,11 +113,9 @@
         const installBtn = document.getElementById('installBtn');
         const closeBanner = document.getElementById('closeBanner');
 
-        // كود الكشف: هل المستخدم داخل التطبيق (APK/PWA) أم المتصفح؟
         const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         function shouldShowBanner() {
-            // إذا كان في وضع التطبيق، لا تظهر البانر أبداً
             if (isAppMode) return false; 
             const lastClose = localStorage.getItem('bannerClosedDate');
             if (!lastClose) return true;
@@ -170,7 +166,8 @@
 
         function updateTime() {
             const now = new Date();
-            document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
+            const timeElement = document.getElementById("time");
+            if(timeElement) timeElement.innerText = "🕒 " + now.toLocaleTimeString('en-GB');
         }
         setInterval(updateTime, 1000);
         updateTime();
@@ -185,6 +182,25 @@
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
         })();
+
+        /* --- إحصائيات وتصحيح: مراقب إنعاش البث التلقائي --- */
+        function tryReviveStream() {
+            // محاولة الوصول لكل عناصر الصوت حتى داخل الـ iFrames لو أمكن
+            const audios = document.querySelectorAll('audio, video');
+            audios.forEach(media => {
+                if (media.paused) {
+                    media.play().catch(err => console.log("بانتظار تفاعل المستخدم..."));
+                }
+            });
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                tryReviveStream();
+            }
+        });
+
+        window.addEventListener("focus", tryReviveStream);
     </script>
 </body>
 </html>
