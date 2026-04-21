@@ -16,10 +16,10 @@
         
         body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         
-        /* بانر التثبيت العايم (Overlay) */
+        /* بانر التثبيت المعدل - مريح للعين ومتناسق مع التصميم */
         #installBanner {
             display: none;
-            background: rgba(28, 28, 28, 0.95);
+            background: rgba(30, 30, 30, 0.95); /* خلفية داكنة احترافية */
             color: white;
             padding: 10px 12px;
             position: fixed;
@@ -27,8 +27,8 @@
             left: 3%;
             width: 94%;
             z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border: 1px solid #ff3b3b;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6); /* ظل ناعم */
+            border: 1px solid #444; /* إطار رمادي هادئ بدل الأحمر */
             border-radius: 15px;
             align-items: center;
             justify-content: space-between;
@@ -37,6 +37,7 @@
         }
         #installBanner .banner-text { font-size: 12px; font-weight: 500; text-align: right; }
         #installBanner .banner-actions { display: flex; align-items: center; gap: 10px; }
+        /* زر التثبيت ظل باللون الأحمر لتمييزه كأكشن لكن بشكل متناسق */
         #installBtn { background: #ff3b3b; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         #closeBanner { cursor: pointer; font-size: 20px; line-height: 1; color: #888; }
 
