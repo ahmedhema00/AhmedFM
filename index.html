@@ -2,28 +2,53 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ahmed FM | راديو أحمد</title>
     
-    <link rel="icon" type="image/png" href="icon-192.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f0f0f">
     
+    <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
         :root {
             --scale: 0.75;
         }
         
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 0; margin: 0; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        /* منع التحديد لجعل الموقع يبدو كتطبيق أصلي */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body { 
+            background: #0f0f0f; 
+            color: white; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            text-align: center; 
+            padding: 0; 
+            margin: 0; 
+            direction: rtl; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            padding-top: env(safe-area-inset-top);
+        }
         
-        /* بانر التثبيت المعدل - إطار رمادي وتنسيق احترافي */
+        /* بانر التثبيت - يظهر فقط في المتصفح العادي */
         #installBanner {
             display: none;
             background: rgba(30, 30, 30, 0.95);
             color: white;
             padding: 10px 12px;
             position: fixed;
-            top: 10px;
+            top: 20px;
             left: 3%;
             width: 94%;
             z-index: 9999;
@@ -90,7 +115,12 @@
         const installBtn = document.getElementById('installBtn');
         const closeBanner = document.getElementById('closeBanner');
 
+        // كود الكشف: هل المستخدم داخل التطبيق (APK/PWA) أم المتصفح؟
+        const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
         function shouldShowBanner() {
+            // إذا كان في وضع التطبيق، لا تظهر البانر أبداً
+            if (isAppMode) return false; 
             const lastClose = localStorage.getItem('bannerClosedDate');
             if (!lastClose) return true;
             const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
