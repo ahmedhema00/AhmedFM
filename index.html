@@ -4,54 +4,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ahmed FM | راديو أحمد</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f0f0f">
+    
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        :root { --scale: 0.75; }
-        * { -webkit-tap-highlight-color: transparent; user-select: none; }
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', Arial, sans-serif; text-align: center; direction: rtl; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: env(safe-area-inset-top); }
-        .player-container { background: #1c1c1c; padding: 25px; border-radius: 25px; width: 95%; max-width: 900px; margin: 15px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; }
-        h1 { font-size: 40px; margin-bottom: 8px; color: #fff; }
+        :root {
+            --scale: 0.75;
+        }
+        
+        /* منع التحديد لجعل الموقع يبدو كتطبيق أصلي */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body { 
+            background: #0f0f0f; 
+            color: white; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            text-align: center; 
+            padding: 0; 
+            margin: 0; 
+            direction: rtl; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        /* بانر التثبيت */
+        #installBanner {
+            display: none;
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            padding: 10px 12px;
+            position: fixed;
+            top: 20px;
+            left: 3%;
+            width: 94%;
+            z-index: 9999;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid #444; 
+            border-radius: 15px;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+        #installBanner .banner-text { font-size: 12px; font-weight: 500; text-align: right; }
+        #installBanner .banner-actions { display: flex; align-items: center; gap: 10px; }
+        #installBtn { background: #ff3b3b; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        #closeBanner { cursor: pointer; font-size: 20px; line-height: 1; color: #888; }
+
+        .player-container { background: #1c1c1c; padding: calc(30px * var(--scale)) calc(18px * var(--scale)); border-radius: 25px; width: 95%; max-width: 900px; margin: 15px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
+        h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
+        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color:#ff3b3b; animation: blink 1s infinite; font-size: 26px; }
+        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
+        .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
+        .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        
+        /* أزرار السوشيال ميديا */
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
-        
-        /* زر تليجرام المؤكد */
-        .social a.telegram-live { background: #26A5E4; font-weight: bold; min-width: 170px; }
-        .live-dot { height: 8px; width: 8px; background-color: #fff; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse-dot 1.5s infinite; }
-        @keyframes pulse-dot { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
-        
-        .time-box { margin-top: 25px; font-size: 20px; font-weight: bold; background: #000; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        .social a:hover { background: #ff3b3b; }
+
+        /* تنسيق زر تليجرام المباشر */
+        .social a.telegram-live {
+            background: #26A5E4;
+            position: relative;
+            min-width: 170px;
+            font-weight: bold;
+        }
+        .social a.telegram-live:hover {
+            background: #1e88be;
+        }
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
 <body>
+
+    <div id="installBanner">
+        <span class="banner-text">استمع بجودة أفضل.. ثبّت تطبيق Ahmed FM 📻</span>
+        <div class="banner-actions">
+            <button id="installBtn">تثبيت</button>
+            <span id="closeBanner">&times;</span>
+        </div>
+    </div>
+
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
-        <div class="live-status"><span class="live-on">●</span> LIVE CONNECTED</div>
+        <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+        
+        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        </div>
 
+        <div class="time-box" id="time">🕒 --:--:--</div>
+        
+        <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
         <div class="social">
             <a href="https://t.me/ahmedib9090" target="_blank" class="telegram-live">
                 <i class="fab fa-telegram"></i> 
                 <span>Live Call on Telegram</span>
                 <span class="live-dot"></span>
             </a>
+
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
-
-        <div class="time-box" id="time">🕒 --:--:--</div>
     </div>
 
+    <div id="disqus_thread"></div>
+
+    <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+        const closeBanner = document.getElementById('closeBanner');
+
+        const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+        function shouldShowBanner() {
+            if (isAppMode) return false; 
+            const lastClose = localStorage.getItem('bannerClosedDate');
+            if (!lastClose) return true;
+            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+            return (new Date().getTime() - lastClose) > threeDaysInMs;
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (shouldShowBanner()) {
+                installBanner.style.display = 'flex';
+            }
+        });
+
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((result) => {
+                    installBanner.style.display = 'none';
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        closeBanner.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            localStorage.setItem('bannerClosedDate', new Date().getTime());
+        });
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: 'Ahmed FM | Live',
+                artist: 'Live As You Love',
+                album: 'Radio Ahmed FM',
+                artwork: [
+                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log(err));
+            });
+        }
+
         function updateTime() {
             const now = new Date();
             document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
         }
         setInterval(updateTime, 1000);
         updateTime();
+
+        var disqus_config = function () {
+            this.page.url = window.location.href;  
+            this.page.identifier = 'ahmedfm_main'; 
+        };
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ahmedfm.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
     </script>
 </body>
 </html>
