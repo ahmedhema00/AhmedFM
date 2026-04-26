@@ -41,7 +41,7 @@
             padding-top: env(safe-area-inset-top);
         }
         
-        /* بانر التثبيت - يظهر فقط في المتصفح العادي */
+        /* بانر التثبيت */
         #installBanner {
             display: none;
             background: rgba(30, 30, 30, 0.95);
@@ -74,9 +74,37 @@
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
         .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        
+        /* أزرار السوشيال ميديا */
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
         .social a:hover { background: #ff3b3b; }
+
+        /* تنسيق زر تليجرام المباشر */
+        .social a.telegram-live {
+            background: #26A5E4;
+            position: relative;
+            min-width: 170px;
+            font-weight: bold;
+        }
+        .social a.telegram-live:hover {
+            background: #1e88be;
+        }
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
         #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
@@ -94,18 +122,28 @@
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
         <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+        
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
             <a href="https://www.caster.fm">Shoutcast Hosting</a>
             <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
+
         <div class="time-box" id="time">🕒 --:--:--</div>
+        
         <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
         <div class="social">
+            <a href="https://t.me/ahmedib9090" target="_blank" class="telegram-live">
+                <i class="fab fa-telegram"></i> 
+                <span>Live Call on Telegram</span>
+                <span class="live-dot"></span>
+            </a>
+
             <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
             <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
     </div>
+
     <div id="disqus_thread"></div>
 
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
@@ -115,11 +153,9 @@
         const installBtn = document.getElementById('installBtn');
         const closeBanner = document.getElementById('closeBanner');
 
-        // كود الكشف: هل المستخدم داخل التطبيق (APK/PWA) أم المتصفح؟
         const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         function shouldShowBanner() {
-            // إذا كان في وضع التطبيق، لا تظهر البانر أبداً
             if (isAppMode) return false; 
             const lastClose = localStorage.getItem('bannerClosedDate');
             if (!lastClose) return true;
