@@ -75,8 +75,14 @@
         
         /* أزرار السوشيال ميديا */
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .social a { text-decoration: none; color: white; background: #282828; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
-        .social a:hover { background: #ff3b3b; }
+        .social a { text-decoration: none; color: white; padding: 12px 20px; border-radius: 12px; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 110px; justify-content: center; }
+        
+        /* ألوان الفيس والواتس الجديدة */
+        .social a.facebook { background: #1877F2; }
+        .social a.facebook:hover { background: #145dbf; transform: translateY(-2px); }
+        
+        .social a.whatsapp { background: #25D366; }
+        .social a.whatsapp:hover { background: #1da851; transform: translateY(-2px); }
 
         /* تنسيق زر تليجرام المباشر */
         .telegram-live-wrapper {
@@ -151,8 +157,12 @@
 
         <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
         <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://www.facebook.com/ana09090" target="_blank" class="facebook">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://wa.me/201027415909" target="_blank" class="whatsapp">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
         </div>
     </div>
 
