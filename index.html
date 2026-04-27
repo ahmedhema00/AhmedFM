@@ -17,13 +17,10 @@
     <style>
         :root {
             --scale: 0.75;
-            --caster-red: #e81e4d; /* لون زر Play في كاستر */
+            --caster-red: #e81e4d;
         }
         
-        * {
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        * { -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body { 
             background: #0f0f0f; 
@@ -41,12 +38,39 @@
             padding-top: env(safe-area-inset-top);
         }
         
-        /* تنسيق زر الاتصال المباشر (الأحمر المتناغم) */
-        .call-live-wrapper {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
+        .player-container { 
+            background: #1c1c1c; 
+            padding: calc(30px * var(--scale)) calc(18px * var(--scale)); 
+            border-radius: 25px; 
+            width: 95%; 
+            max-width: 900px; 
+            margin: 15px auto; 
+            box-shadow: 0 0 60px rgba(0,0,0,0.8); 
+            border: 1px solid #333; 
+            box-sizing: border-box; 
+            position: relative; 
         }
+
+        h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
+        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
+        
+        .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
+        .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
+
+        /* تعديل المشغل لضمان الظهور */
+        .cstrEmbed { 
+            margin-top: 10px; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            width: 100%; 
+            min-height: 150px; /* ضمان وجود مساحة للمشغل */
+            background: #fff; 
+        }
+
+        .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        
+        .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
             background: var(--caster-red);
             text-decoration: none;
@@ -60,17 +84,13 @@
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(232, 30, 77, 0.3);
         }
-        .call-live:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
+        .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        /* تنسيق أزرار التواصل (المربعات الرمادية مع لوجو ملون) */
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { 
             text-decoration: none; 
             color: white; 
-            background: #282828; /* اللون الرمادي الأصلي */
+            background: #282828; 
             padding: 12px 20px; 
             border-radius: 12px; 
             transition: 0.3s; 
@@ -84,27 +104,17 @@
         }
         .social a:hover { background: #333; transform: translateY(-2px); }
 
-        /* تلوين الأيقونات فقط بألوانها الطبيعية */
+        /* ألوان الأيقونات الطبيعية */
         .fa-facebook { color: #1877F2; }
         .fa-whatsapp { color: #25D366; }
 
-        /* باقي التنسيقات الثابتة */
-        .player-container { background: #1c1c1c; padding: calc(30px * var(--scale)) calc(18px * var(--scale)); border-radius: 25px; width: 95%; max-width: 900px; margin: 15px auto; box-shadow: 0 0 60px rgba(0,0,0,0.8); border: 1px solid #333; box-sizing: border-box; position: relative; }
-        h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
-        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
-        .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
-        .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
-        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; }
-        .cstrEmbed a { font-size: 11px !important; color: #888 !important; text-decoration: none !important; display: inline-block !important; margin: 8px 6px; }
-        .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
-        
         .live-dot { height: 10px; width: 10px; background-color: #fff; border-radius: 50%; display: inline-block; animation: pulse-dot 1.5s infinite; }
         @keyframes pulse-dot {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
+        
         #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
@@ -113,9 +123,9 @@
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
-        <div class="live-status"><span id="liveLight" class="live-on">●</span> LIVE</div>
+        <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d">
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
