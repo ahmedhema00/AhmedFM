@@ -55,7 +55,26 @@
 
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
 
-        .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
+        /* التعديل هنا لتنسيق الوقت و AM/PM */
+        .time-box { 
+            margin-top: 25px; 
+            font-size: clamp(16px, 4vw, 22px); 
+            font-weight: bold; 
+            color: #fff; 
+            background: #000; 
+            display: inline-flex; 
+            align-items: center; 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            direction: ltr; 
+            gap: 5px;
+        }
+        .time-box span.ampm { 
+            font-size: 0.7em; 
+            opacity: 0.8; 
+            margin-left: 5px; 
+            font-weight: normal; 
+        }
         
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
@@ -117,7 +136,7 @@
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
-        <div class="time-box" id="time">🕒 --:--:--</div>
+        <div class="time-box" id="time-container">🕒 <span id="time-digits">--:--:--</span><span id="time-ampm" class="ampm">--</span></div>
         
         <div class="call-live-wrapper">
             <a href="tel:01027415909" class="call-live">
@@ -142,23 +161,29 @@
 
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // سكريبت الوقت
+        // سكريبت الوقت المعدل لصيغة 12 ساعة
         function updateTime() {
             const now = new Date();
-            document.getElementById("time").innerText = "🕒 " + now.toLocaleTimeString('en-GB');
+            let options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            let timeString = now.toLocaleTimeString('en-US', options);
+            
+            // تقسيم الوقت للحصول على الأرقام والـ AM/PM بشكل منفصل
+            let parts = timeString.split(' ');
+            document.getElementById("time-digits").innerText = parts[0];
+            document.getElementById("time-ampm").innerText = parts[1];
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // إعدادات Disqus المحدثة
+        // إعدادات Disqus
         var disqus_config = function () {
-            this.page.url = "https://ahmed-fm.vercel.app"; // الرابط الرسمي لضمان استقرار التعليقات
+            this.page.url = "https://ahmed-fm.vercel.app"; 
             this.page.identifier = 'ahmedfm_main'; 
         };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date()); // لضمان تحديث الإعدادات فوراً
+            s.setAttribute('data-timestamp', +new Date()); 
             (d.head || d.body).appendChild(s);
         })();
     </script>
