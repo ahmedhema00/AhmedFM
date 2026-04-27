@@ -12,7 +12,7 @@
     <style>
         :root {
             --scale: 0.75;
-            --caster-red: #e81e4d; /* نفس لون زر كاستر */
+            --caster-red: #e81e4d;
         }
         
         * { -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -50,15 +50,12 @@
         p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
+        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
 
-        /* تنسيق حاوية المشغل الأصلي */
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
-
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         
-        /* زر الاتصال الأحمر المتناسق */
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
             background: var(--caster-red);
@@ -93,7 +90,6 @@
         }
         .social a:hover { background: #333; transform: translateY(-2px); }
 
-        /* تلوين الأيقونات فقط */
         .fa-facebook { color: #1877F2; }
         .fa-whatsapp { color: #25D366; }
 
@@ -104,7 +100,17 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
         
-        #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
+        /* حاوية Disqus - بدون عنوان يدوي */
+        #disqus_thread { 
+            margin: 25px auto; 
+            width: 95%; 
+            max-width: 900px; 
+            background: #1c1c1c; 
+            padding: 20px; 
+            border-radius: 25px; 
+            border: 1px solid #333; 
+            box-sizing: border-box; 
+        }
     </style>
 </head>
 <body>
@@ -115,8 +121,6 @@
         <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
