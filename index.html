@@ -53,9 +53,12 @@
         .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
 
+        /* حاوية المشغل - نتركها بيضاء كما هي ليعمل السكريبت */
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
+
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         
+        /* زر الاتصال باللون الجديد */
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
             background: var(--caster-red);
@@ -72,6 +75,7 @@
         }
         .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
+        /* أزرار التواصل الرمادية مع أيقونات ملونة */
         .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .social a { 
             text-decoration: none; 
@@ -100,7 +104,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
         
-        /* حاوية Disqus - بدون عنوان يدوي */
         #disqus_thread { 
             margin: 25px auto; 
             width: 95%; 
@@ -145,6 +148,7 @@
         </div>
     </div>
 
+    <div style="margin-top:30px; color:#fff; font-size: 18px; font-weight: bold;">React with us & Leave a comment ↓</div>
     <div id="disqus_thread"></div>
 
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
