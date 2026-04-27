@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ahmed FM | راديو أحمد</title>
     
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0f0f0f">
-    
     <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -17,7 +12,7 @@
     <style>
         :root {
             --scale: 0.75;
-            --caster-red: #e81e4d;
+            --caster-red: #e81e4d; /* نفس لون زر كاستر */
         }
         
         * { -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -58,24 +53,18 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
 
-        /* تعديل المشغل لضمان الظهور */
-        .cstrEmbed { 
-            margin-top: 10px; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            width: 100%; 
-            min-height: 150px; /* ضمان وجود مساحة للمشغل */
-            background: #fff; 
-        }
+        /* تنسيق حاوية المشغل الأصلي */
+        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
 
         .time-box { margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; display: inline-block; padding: 10px 25px; border-radius: 12px; direction: ltr; }
         
+        /* زر الاتصال الأحمر المتناسق */
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
             background: var(--caster-red);
             text-decoration: none;
             color: white;
-            padding: 15px 35px;
+            padding: 12px 30px;
             border-radius: 15px;
             font-weight: bold;
             display: flex;
@@ -104,7 +93,7 @@
         }
         .social a:hover { background: #333; transform: translateY(-2px); }
 
-        /* ألوان الأيقونات الطبيعية */
+        /* تلوين الأيقونات فقط */
         .fa-facebook { color: #1877F2; }
         .fa-whatsapp { color: #25D366; }
 
@@ -125,7 +114,9 @@
         <p>Live Radio Station</p>
         <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d">
+        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
