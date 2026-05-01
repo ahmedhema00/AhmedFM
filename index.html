@@ -13,10 +13,11 @@
         :root {
             --scale: 0.75;
             --caster-red: #e81e4d;
+            /* تأثير النيون المطلوب */
             --neon-glow: 0 0 12px rgba(232, 30, 77, 0.7);
         }
         
-        * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
+        * { -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body { 
             background: #0f0f0f; 
@@ -33,152 +34,158 @@
             justify-content: flex-start;
             padding-top: env(safe-area-inset-top);
         }
-
-        /* إصلاح المشغل - إجباري الظهور */
-        .cstrEmbed { 
-            margin-top: 15px; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            width: 100% !important; 
-            min-height: 120px !important; /* ضمان وجود مساحة للمشغل */
-            background: #fff; 
-            display: block !important;
-        }
-
-        /* بانر عائم Overlay احترافي وشفاف */
-        #pwa-install-banner {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            max-width: 350px;
-            background: rgba(28, 28, 28, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #444;
-            border-radius: 20px;
-            padding: 12px 15px;
-            display: none; 
-            align-items: center;
-            justify-content: space-between;
-            z-index: 99999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-
-        .pwa-text { font-size: 13px; color: #eee; }
-        .pwa-actions { display: flex; align-items: center; gap: 10px; }
-        .btn-install { background: #444; color: #fff; border: 1px solid #666; padding: 5px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; }
-        .btn-close { background: transparent; color: #999; border: none; font-size: 22px; cursor: pointer; }
-
-        /* باقي التصميم */
+        
         .player-container { 
             background: #1c1c1c; 
-            padding: 25px 15px; 
+            padding: calc(30px * var(--scale)) calc(18px * var(--scale)); 
             border-radius: 25px; 
             width: 95%; 
-            max-width: 600px; 
-            margin: 30px auto; 
+            max-width: 900px; 
+            margin: 15px auto; 
             box-shadow: 0 0 60px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
+            box-sizing: border-box; 
+            position: relative; 
         }
 
-        h1 { font-size: 32px; margin-bottom: 5px; color: #fff; }
-        p { font-size: 14px; opacity: 0.6; margin-bottom: 20px; }
+        h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
+        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
-        .live-status { font-size: 20px; font-weight: bold; margin-bottom: 20px; color: var(--caster-red); }
-        
+        .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
+        .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
+
+        /* حاوية المشغل - كما هي في الكود القديم */
+        .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
+
+        /* الساعة بتأثير النيون المقتبس من الصورة */
         .time-box { 
-            margin-top: 20px; font-size: 20px; font-weight: bold; color: #fff; background: #000; 
-            padding: 10px 20px; border-radius: 12px; border: 1.5px solid var(--caster-red); box-shadow: var(--neon-glow);
-            display: inline-flex; direction: ltr;
+            margin-top: 25px; 
+            font-size: clamp(16px, 4vw, 22px); 
+            font-weight: bold; 
+            color: #fff; 
+            background: #000; 
+            display: inline-flex; 
+            align-items: center; 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            direction: ltr; 
+            gap: 5px;
+            border: 1.5px solid var(--caster-red);
+            box-shadow: var(--neon-glow);
+        }
+        .time-box span.ampm { 
+            font-size: 0.7em; 
+            opacity: 0.8; 
+            margin-left: 5px; 
+            font-weight: normal; 
         }
         
+        .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
-            background: var(--caster-red); text-decoration: none; color: white; padding: 12px 25px;
-            border-radius: 15px; font-weight: bold; display: flex; align-items: center; gap: 10px;
-            margin-top: 25px; justify-content: center; width: fit-content; margin-left: auto; margin-right: auto;
+            background: var(--caster-red);
+            text-decoration: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(232, 30, 77, 0.3);
         }
+        .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
+        /* تنسيق زر طلب الأغنية الجديد بالنيون */
+        .request-container { margin-top: 30px; }
         .request-btn {
-            text-decoration: none; color: white; background: #1c1c1c; padding: 10px 20px;
-            border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;
-            margin-top: 25px; border: 1.5px solid var(--caster-red);
+            text-decoration: none;
+            color: white;
+            background: #1c1c1c;
+            padding: 12px 25px;
+            border-radius: 12px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 1.5px solid var(--caster-red);
+            box-shadow: var(--neon-glow);
         }
+        .request-btn:hover { background: #282828; transform: translateY(-2px); }
+        .request-btn i { color: #26A5E4; font-size: 20px; }
+
+        .live-dot { height: 10px; width: 10px; background-color: #fff; border-radius: 50%; display: inline-block; animation: pulse-dot 1.5s infinite; }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+        
+        #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <div id="pwa-install-banner">
-        <div class="pwa-text">📻 تثبيت تطبيق راديو أحمد</div>
-        <div class="pwa-actions">
-            <button class="btn-install" id="installBtn">تثبيت</button>
-            <button class="btn-close" onclick="hideBanner()">×</button>
-        </div>
-    </div>
-
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
         <p>Live Radio Station</p>
-        <div class="live-status">● LIVE</div>
+        <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
-        <!-- المشغل الأصلي غصب عن المتصفح -->
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-rendered="false">
+        <!-- جزء المشغل الأصلي من كودك القديم بدون تغيير -->
+        <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
             <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
-        <div class="time-box">🕒 <span id="time-digits">--:--:--</span> <span id="time-ampm">--</span></div>
+        <div class="time-box" id="time-container">🕒 <span id="time-digits">--:--:--</span><span id="time-ampm" class="ampm">--</span></div>
         
-        <a href="tel:01027415909" class="call-live"><i class="fas fa-phone-alt"></i> Live Call</a>
+        <div class="call-live-wrapper">
+            <a href="tel:01027415909" class="call-live">
+                <i class="fas fa-phone-alt"></i> 
+                <span>Live Call</span>
+                <span class="live-dot"></span>
+            </a>
+        </div>
 
-        <div style="margin-top: 20px;">
-            <a href="https://t.me/ahmedib9090" target="_blank" class="request-btn">
+        <!-- تبديل قسم التواصل بقسم طلب الأغنية -->
+        <div class="request-container">
+            <div style="margin-bottom:15px; color:#bbb; font-size: 14px; font-weight: bold;">Request a song</div>
+            <a href="https://t.me/ahmedib9090?text=أهلا%20يا%20أحمد%20أنا%20بسمعك%20دلوقتي%20وحابب%20أطلب%20أغنية.." target="_blank" class="request-btn">
                 <i class="fab fa-telegram"></i> طلب أغنية 🎵
             </a>
         </div>
     </div>
 
-    <div id="disqus_thread" style="width: 95%; max-width: 600px; margin-top: 20px;"></div>
+    <div id="disqus_thread"></div>
 
+    <!-- السكريبتات كما هي في كودك القديم -->
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // ضبط البانر
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const lastHidden = localStorage.getItem('pwa_hidden');
-            const threeDays = 3 * 24 * 60 * 60 * 1000;
-            if (!lastHidden || (Date.now() - lastHidden) > threeDays) {
-                document.getElementById('pwa-install-banner').style.display = 'flex';
-            }
-        });
-
-        document.getElementById('installBtn').onclick = async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') document.getElementById('pwa-install-banner').style.display = 'none';
-                deferredPrompt = null;
-            }
-        };
-
-        function hideBanner() {
-            document.getElementById('pwa-install-banner').style.display = 'none';
-            localStorage.setItem('pwa_hidden', Date.now());
-        }
-
-        // تسجيل SW
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
-        }
-
-        // الوقت
         function updateTime() {
             const now = new Date();
-            document.getElementById("time-digits").innerText = now.toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById("time-ampm").innerText = now.getHours() >= 12 ? 'PM' : 'AM';
+            let options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            let timeString = now.toLocaleTimeString('en-US', options);
+            let parts = timeString.split(' ');
+            document.getElementById("time-digits").innerText = parts[0];
+            document.getElementById("time-ampm").innerText = parts[1];
         }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        var disqus_config = function () {
+            this.page.url = "https://ahmed-fm.vercel.app"; 
+            this.page.identifier = 'ahmedfm_main'; 
+        };
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ahmedfm.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date()); 
+            (d.head || d.body).appendChild(s);
+        })();
     </script>
 </body>
 </html>
