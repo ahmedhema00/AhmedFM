@@ -34,7 +34,7 @@
             padding-top: env(safe-area-inset-top);
         }
 
-        /* شريط العنوان - الضبط الجديد لسرعة الظهور وعكس الاتجاه */
+        /* شريط العنوان - الضبط الاحترافي الجديد */
         .ticker-wrap {
             width: 100%;
             background: rgba(232, 30, 77, 0.15);
@@ -42,25 +42,25 @@
             border-bottom: 1px solid #333;
             padding: 12px 0;
             margin-bottom: 10px;
-            display: flex;
+            white-space: nowrap;
         }
 
         .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding-left: 100%; /* يبدأ النص من خارج الشاشة يساراً */
-            animation: marquee-reverse 20s linear infinite; 
+            padding-right: 15%; /* مسافة أمان قبل التكرار */
+            animation: marquee 22s linear infinite; 
             font-size: 17px;
             color: #ffffff;
             font-weight: 500;
-            /* استخدام translate3d لضمان أعلى سلاسة على الموبايل */
             will-change: transform;
-            transform: translate3d(0, 0, 0);
         }
 
-        @keyframes marquee-reverse {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(100%, 0, 0); } /* الحركة من اليسار لليمين */
+        @keyframes marquee {
+            /* بيبدأ من بره الشاشة يميناً 100% وبيدخل تدريجياً */
+            0% { transform: translateX(100%); } 
+            /* بيخرج بالكامل يساراً -100% عشان يلف فوراً */
+            100% { transform: translateX(-100%); }
         }
         
         .player-container { 
@@ -117,7 +117,7 @@
         }
         .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .social { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .social { margin-top: 20px; display: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .social a { 
             text-decoration: none; 
             color: white; 
@@ -154,7 +154,7 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-             Ahmed FM 🎙 - Live As You Love &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يمكنك التواصل معنا وطلب أغنيتك المفضلة 🎵 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يسعدنا مشاركم معنا دائماً ويمكنكم التعليق أو التفاعل من خلال التفاعلات أدناه ⬇✨
+             Ahmed FM 🎙 - Live As You Love &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يمكنك التواصل معنا وطلب أغنيتك المفضلة 🎵 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يسعدنا مشاركتكم معنا دائماً ويمكنكم التعليق أو التفاعل من خلال التفاعلات أدناه ⬇✨
         </div>
     </div>
 
