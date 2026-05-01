@@ -34,7 +34,7 @@
             padding-top: env(safe-area-inset-top);
         }
 
-        /* شريط العنوان - تحديث الموبايل لضمان السلاسة وعدم القفز */
+        /* شريط العنوان - الضبط النهائي بـ 5% padding */
         .ticker-wrap {
             width: 100%;
             background: rgba(232, 30, 77, 0.15);
@@ -47,17 +47,15 @@
         .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding-right: 15%; /* المسافة اللي طلبتها */
+            padding-right: 5%; /* التعديل الأخير المطلوب */
             animation: marquee 35s linear infinite; 
             font-size: 17px;
             color: #ffffff;
             font-weight: 500;
-            /* تنبيه للمتصفح لتجهيز المعالج الرسومي */
             will-change: transform; 
         }
 
         @keyframes marquee {
-            /* البداية من 100% تضمن الدخول من أقصى اليمين بانتظام */
             0% { transform: translateX(100%); } 
             100% { transform: translateX(-100%); }
         }
@@ -153,7 +151,7 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-             Ahmed FM 🎙 - Live As You Love &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يمكنك التواصل معنا وطلب أغنيتك المفضلة 🎵 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يسعدنا مشاركم معنا دائماً ويمكنكم التعليق أو التفاعل من خلال التفاعلات أدناه ⬇✨
+             Ahmed FM 🎙 - Live As You Love &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يمكنك التواصل معنا وطلب أغنيتك المفضلة 🎵 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يسعدنا مشاركتكم معنا دائماً ويمكنكم التعليق أو التفاعل من خلال التفاعلات أدناه ⬇✨
         </div>
     </div>
 
