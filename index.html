@@ -13,9 +13,10 @@
         :root {
             --scale: 0.75;
             --caster-red: #e81e4d;
+            --neon-glow: 0 0 10px rgba(232, 30, 77, 0.5), 0 0 20px rgba(232, 30, 77, 0.3);
         }
         
-        * { -webkit-tap-highlight-color: transparent; user-select: none; }
+        * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
 
         body { 
             background: #0f0f0f; 
@@ -32,6 +33,31 @@
             justify-content: flex-start;
             padding-top: env(safe-area-inset-top);
         }
+
+        /* شريط العنوان - الضبط المطلوب 15% */
+        .ticker-wrap {
+            width: 100%;
+            background: rgba(232, 30, 77, 0.15);
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+            padding: 12px 0;
+            margin-bottom: 10px;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 15%; /* تم التعديل بناءً على طلبك */
+            animation: marquee 35s linear infinite; 
+            font-size: 17px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100vw); } 
+            100% { transform: translateX(-100%); }
+        }
         
         .player-container { 
             background: #1c1c1c; 
@@ -42,12 +68,11 @@
             margin: 15px auto; 
             box-shadow: 0 0 60px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
-            box-sizing: border-box; 
             position: relative; 
         }
 
         h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
-        p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
+        p.subtitle { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
@@ -55,26 +80,22 @@
 
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
 
-        /* التعديل هنا لتنسيق الوقت و AM/PM */
         .time-box { 
             margin-top: 25px; 
-            font-size: clamp(16px, 4vw, 22px); 
+            font-size: clamp(18px, 5vw, 24px); 
             font-weight: bold; 
             color: #fff; 
             background: #000; 
             display: inline-flex; 
             align-items: center; 
-            padding: 10px 20px; 
-            border-radius: 12px; 
+            padding: 12px 25px; 
+            border-radius: 15px; 
             direction: ltr; 
-            gap: 5px;
+            gap: 8px;
+            border: 1px solid var(--caster-red);
+            box-shadow: var(--neon-glow);
         }
-        .time-box span.ampm { 
-            font-size: 0.7em; 
-            opacity: 0.8; 
-            margin-left: 5px; 
-            font-weight: normal; 
-        }
+        .time-box span.ampm { font-size: 0.7em; opacity: 0.8; margin-left: 5px; font-weight: normal; color: var(--caster-red); }
         
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
@@ -92,26 +113,28 @@
         }
         .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .social { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .social { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .social a { 
             text-decoration: none; 
             color: white; 
             background: #282828; 
-            padding: 12px 20px; 
+            padding: 12px 15px; 
             border-radius: 12px; 
             transition: 0.3s; 
             display: flex; 
             align-items: center; 
             gap: 8px; 
-            font-size: 14px; 
-            min-width: 110px; 
+            font-size: 13px; 
+            min-width: 100px; 
             justify-content: center;
             border: 1px solid #333;
         }
-        .social a:hover { background: #333; transform: translateY(-2px); }
+        .social a.request-song { background: #1c1c1c; border-color: var(--caster-red); color: #fff; }
+        .social a:hover { transform: translateY(-2px); background: #333; }
 
         .fa-facebook { color: #1877F2; }
         .fa-whatsapp { color: #25D366; }
+        .fa-music { color: var(--caster-red); }
 
         .live-dot { height: 10px; width: 10px; background-color: #fff; border-radius: 50%; display: inline-block; animation: pulse-dot 1.5s infinite; }
         @keyframes pulse-dot {
@@ -125,9 +148,15 @@
 </head>
 <body>
 
+    <div class="ticker-wrap">
+        <div class="ticker">
+             Ahmed FM 🎙 - Live As You Love &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يمكنك التواصل معنا وطلب أغنيتك المفضلة 🎵 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; يسعدنا مشاركتكم معنا دائماً ويمكنكم التعليق أو التفاعل من خلال التفاعلات أدناه ⬇✨
+        </div>
+    </div>
+
     <div class="player-container">
         <h1>🎙️ Ahmed FM</h1>
-        <p>Live Radio Station</p>
+        <p class="subtitle">Live Radio Station</p>
         <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
@@ -140,20 +169,15 @@
         
         <div class="call-live-wrapper">
             <a href="tel:01027415909" class="call-live">
-                <i class="fas fa-phone-alt"></i> 
-                <span>Live Call</span>
-                <span class="live-dot"></span>
+                <i class="fas fa-phone-alt"></i> <span>Live Call</span> <span class="live-dot"></span>
             </a>
         </div>
 
-        <div style="margin-top:30px; color:#bbb; font-size: 14px;">Contact The Host</div>
+        <div style="margin-top:30px; color:#bbb; font-size: 14px; margin-bottom: 10px;">Contact The Host</div>
         <div class="social">
-            <a href="https://www.facebook.com/ana09090" target="_blank">
-                <i class="fab fa-facebook"></i> Facebook
-            </a>
-            <a href="https://wa.me/201027415909" target="_blank">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
+            <a href="https://www.facebook.com/ana09090" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://wa.me/201027415909" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://wa.me/201027415909?text=طلب%20أغنية..." target="_blank" class="request-song"><i class="fas fa-music"></i> طلب أغنية</a>
         </div>
     </div>
 
@@ -161,13 +185,10 @@
 
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
-        // سكريبت الوقت المعدل لصيغة 12 ساعة
         function updateTime() {
             const now = new Date();
             let options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
             let timeString = now.toLocaleTimeString('en-US', options);
-            
-            // تقسيم الوقت للحصول على الأرقام والـ AM/PM بشكل منفصل
             let parts = timeString.split(' ');
             document.getElementById("time-digits").innerText = parts[0];
             document.getElementById("time-ampm").innerText = parts[1];
@@ -175,11 +196,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // إعدادات Disqus
-        var disqus_config = function () {
-            this.page.url = "https://ahmed-fm.vercel.app"; 
-            this.page.identifier = 'ahmedfm_main'; 
-        };
+        var disqus_config = function () { this.page.url = "https://ahmed-fm.vercel.app"; this.page.identifier = 'ahmedfm_main'; };
         (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://ahmedfm.disqus.com/embed.js';
