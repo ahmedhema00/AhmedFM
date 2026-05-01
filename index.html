@@ -13,8 +13,8 @@
         :root {
             --scale: 0.75;
             --caster-red: #e81e4d;
-            /* تأثير النيون المطلوب */
             --neon-glow: 0 0 12px rgba(232, 30, 77, 0.7);
+            --pwa-blue: #26A5E4; /* لون هادي للبانر */
         }
         
         * { -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -51,80 +51,58 @@
         h1 { font-size: clamp(28px, 8vw, 50px); margin-bottom: 8px; color: #fff; }
         p { font-size: clamp(14px, 3vw, 18px); opacity: 0.7; margin-bottom: 25px; direction: ltr; }
         
+        /* تنسيق بانر التثبيت العائم */
+        #pwa-install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #222;
+            border: 1px solid var(--pwa-blue);
+            border-radius: 15px;
+            padding: 12px 20px;
+            display: none; /* مخفي افتراضياً */
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 400px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp { from { bottom: -100px; } to { bottom: 20px; } }
+
+        .pwa-text { font-size: 14px; color: #eee; text-align: right; flex-grow: 1; margin-left: 10px; }
+        .pwa-btns { display: flex; gap: 10px; }
+        .btn-install { background: var(--pwa-blue); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .btn-close { background: transparent; color: #888; border: none; cursor: pointer; font-size: 18px; padding: 5px; }
+
         .live-status { font-size: 22px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
 
-        /* حاوية المشغل - كما هي في الكود القديم */
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
 
-        /* الساعة بتأثير النيون المقتبس من الصورة */
         .time-box { 
-            margin-top: 25px; 
-            font-size: clamp(16px, 4vw, 22px); 
-            font-weight: bold; 
-            color: #fff; 
-            background: #000; 
-            display: inline-flex; 
-            align-items: center; 
-            padding: 10px 20px; 
-            border-radius: 12px; 
-            direction: ltr; 
-            gap: 5px;
-            border: 1.5px solid var(--caster-red);
-            box-shadow: var(--neon-glow);
-        }
-        .time-box span.ampm { 
-            font-size: 0.7em; 
-            opacity: 0.8; 
-            margin-left: 5px; 
-            font-weight: normal; 
+            margin-top: 25px; font-size: clamp(16px, 4vw, 22px); font-weight: bold; color: #fff; background: #000; 
+            display: inline-flex; align-items: center; padding: 10px 20px; border-radius: 12px; direction: ltr; gap: 5px;
+            border: 1.5px solid var(--caster-red); box-shadow: var(--neon-glow);
         }
         
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
-            background: var(--caster-red);
-            text-decoration: none;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 15px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(232, 30, 77, 0.3);
+            background: var(--caster-red); text-decoration: none; color: white; padding: 12px 30px;
+            border-radius: 15px; font-weight: bold; display: flex; align-items: center; gap: 12px;
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(232, 30, 77, 0.3);
         }
-        .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        /* تنسيق زر طلب الأغنية الجديد بالنيون */
         .request-container { margin-top: 30px; }
         .request-btn {
-            text-decoration: none;
-            color: white;
-            background: #1c1c1c;
-            padding: 12px 25px;
-            border-radius: 12px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            border: 1.5px solid var(--caster-red);
-            box-shadow: var(--neon-glow);
+            text-decoration: none; color: white; background: #1c1c1c; padding: 12px 25px;
+            border-radius: 12px; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+            font-size: 16px; font-weight: bold; border: 1.5px solid var(--caster-red); box-shadow: var(--neon-glow);
         }
-        .request-btn:hover { background: #282828; transform: translateY(-2px); }
-        .request-btn i { color: #26A5E4; font-size: 20px; }
-
-        .live-dot { height: 10px; width: 10px; background-color: #fff; border-radius: 50%; display: inline-block; animation: pulse-dot 1.5s infinite; }
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-        }
-        
-        #disqus_thread { margin: 25px auto; width: 95%; max-width: 900px; background: #1c1c1c; padding: 20px; border-radius: 25px; border: 1px solid #333; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -134,58 +112,89 @@
         <p>Live Radio Station</p>
         <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
-        <!-- جزء المشغل الأصلي من كودك القديم بدون تغيير -->
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
             <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
         <div class="time-box" id="time-container">🕒 <span id="time-digits">--:--:--</span><span id="time-ampm" class="ampm">--</span></div>
         
         <div class="call-live-wrapper">
             <a href="tel:01027415909" class="call-live">
-                <i class="fas fa-phone-alt"></i> 
-                <span>Live Call</span>
-                <span class="live-dot"></span>
+                <i class="fas fa-phone-alt"></i> <span>Live Call</span>
             </a>
         </div>
 
-        <!-- تبديل قسم التواصل بقسم طلب الأغنية -->
         <div class="request-container">
             <div style="margin-bottom:15px; color:#bbb; font-size: 14px; font-weight: bold;">Request a song</div>
-            <a href="https://t.me/ahmedib9090?text=أهلا%20يا%20أحمد%20أنا%20بسمعك%20دلوقتي%20وحابب%20أطلب%20أغنية.." target="_blank" class="request-btn">
+            <a href="https://t.me/ahmedib9090" target="_blank" class="request-btn">
                 <i class="fab fa-telegram"></i> طلب أغنية 🎵
             </a>
         </div>
     </div>
 
+    <!-- بانر التثبيت المخصص -->
+    <div id="pwa-install-banner">
+        <button class="btn-close" onclick="hideBanner()">×</button>
+        <div class="pwa-text">ثبّت تطبيق Ahmed FM على موبايلك لسهولة الاستماع 📻</div>
+        <button class="btn-install" id="installBtn">تثبيت</button>
+    </div>
+
     <div id="disqus_thread"></div>
 
-    <!-- السكريبتات كما هي في كودك القديم -->
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
+        // --- منطق بانر التثبيت الذكي ---
+        let deferredPrompt;
+        const banner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // التحقق إذا كان المستخدم أغلقه من قبل (خلال 3 أيام)
+            const lastHidden = localStorage.getItem('pwa_banner_hidden');
+            const now = new Date().getTime();
+            const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 أيام بالملي ثانية
+
+            if (!lastHidden || (now - lastHidden) > threeDays) {
+                banner.style.display = 'flex';
+            }
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    banner.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        function hideBanner() {
+            banner.style.display = 'none';
+            // حفظ وقت الإخفاء في ذاكرة المتصفح
+            localStorage.setItem('pwa_banner_hidden', new Date().getTime());
+        }
+
+        // --- ربط الـ Service Worker ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+
+        // تحديث الوقت (نفس كودك القديم)
         function updateTime() {
             const now = new Date();
-            let options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            let timeString = now.toLocaleTimeString('en-US', options);
+            let timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
             let parts = timeString.split(' ');
             document.getElementById("time-digits").innerText = parts[0];
             document.getElementById("time-ampm").innerText = parts[1];
         }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        var disqus_config = function () {
-            this.page.url = "https://ahmed-fm.vercel.app"; 
-            this.page.identifier = 'ahmedfm_main'; 
-        };
-        (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://ahmedfm.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date()); 
-            (d.head || d.body).appendChild(s);
-        })();
+        setInterval(updateTime, 1000); updateTime();
     </script>
 </body>
 </html>
