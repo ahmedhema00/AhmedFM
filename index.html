@@ -13,11 +13,11 @@
         :root {
             --scale: 0.75;
             --caster-red: #e81e4d;
-            /* تأثير النيون الهادي اللي في الصورة */
-            --neon-glow: 0 0 10px rgba(232, 30, 77, 0.5), inset 0 0 5px rgba(232, 30, 77, 0.2);
+            /* تأثير النيون المطلوب */
+            --neon-glow: 0 0 12px rgba(232, 30, 77, 0.7);
         }
         
-        * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
+        * { -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body { 
             background: #0f0f0f; 
@@ -44,6 +44,7 @@
             margin: 15px auto; 
             box-shadow: 0 0 60px rgba(0,0,0,0.8); 
             border: 1px solid #333; 
+            box-sizing: border-box; 
             position: relative; 
         }
 
@@ -54,9 +55,10 @@
         @keyframes blink { 0% {opacity:1;} 50% {opacity:0.3;} 100% {opacity:1;} }
         .live-on { color: var(--caster-red); animation: blink 1s infinite; font-size: 26px; }
 
+        /* حاوية المشغل - كما هي في الكود القديم */
         .cstrEmbed { margin-top: 10px; border-radius: 15px; overflow: hidden; width: 100%; background: #fff; }
 
-        /* الساعة بتأثير النيون المقتبس من الصورة الأولى */
+        /* الساعة بتأثير النيون المقتبس من الصورة */
         .time-box { 
             margin-top: 25px; 
             font-size: clamp(16px, 4vw, 22px); 
@@ -65,14 +67,19 @@
             background: #000; 
             display: inline-flex; 
             align-items: center; 
-            padding: 10px 25px; 
-            border-radius: 15px; 
+            padding: 10px 20px; 
+            border-radius: 12px; 
             direction: ltr; 
-            gap: 8px;
+            gap: 5px;
             border: 1.5px solid var(--caster-red);
             box-shadow: var(--neon-glow);
         }
-        .time-box span.ampm { font-size: 0.7em; opacity: 0.8; margin-left: 5px; font-weight: normal; }
+        .time-box span.ampm { 
+            font-size: 0.7em; 
+            opacity: 0.8; 
+            margin-left: 5px; 
+            font-weight: normal; 
+        }
         
         .call-live-wrapper { margin-top: 30px; display: flex; justify-content: center; }
         .call-live {
@@ -90,25 +97,25 @@
         }
         .call-live:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        /* ستايل زر طلب الأغنية الجديد */
-        .request-section { margin-top: 35px; }
+        /* تنسيق زر طلب الأغنية الجديد بالنيون */
+        .request-container { margin-top: 30px; }
         .request-btn {
             text-decoration: none;
             color: white;
-            background: #151515;
-            padding: 15px 35px;
-            border-radius: 15px;
-            font-weight: bold;
+            background: #1c1c1c;
+            padding: 12px 25px;
+            border-radius: 12px;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: 0.3s;
+            font-size: 16px;
+            font-weight: bold;
             border: 1.5px solid var(--caster-red);
             box-shadow: var(--neon-glow);
-            font-size: 16px;
         }
-        .request-btn:hover { transform: scale(1.05); background: #202020; }
-        .request-btn i { color: #0088cc; font-size: 20px; }
+        .request-btn:hover { background: #282828; transform: translateY(-2px); }
+        .request-btn i { color: #26A5E4; font-size: 20px; }
 
         .live-dot { height: 10px; width: 10px; background-color: #fff; border-radius: 50%; display: inline-block; animation: pulse-dot 1.5s infinite; }
         @keyframes pulse-dot {
@@ -127,22 +134,26 @@
         <p>Live Radio Station</p>
         <div class="live-status"><span class="live-on">●</span> LIVE</div>
         
+        <!-- جزء المشغل الأصلي من كودك القديم بدون تغيير -->
         <div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7309e0cd-67df-45b6-a0b5-684cc0bda99c" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
 
-        <!-- الساعة المعدلة بالنيون -->
         <div class="time-box" id="time-container">🕒 <span id="time-digits">--:--:--</span><span id="time-ampm" class="ampm">--</span></div>
         
         <div class="call-live-wrapper">
             <a href="tel:01027415909" class="call-live">
-                <i class="fas fa-phone-alt"></i> <span>Live Call</span> <span class="live-dot"></span>
+                <i class="fas fa-phone-alt"></i> 
+                <span>Live Call</span>
+                <span class="live-dot"></span>
             </a>
         </div>
 
-        <!-- القسم الجديد لطلب الأغاني -->
-        <div class="request-section">
-            <div style="margin-bottom:15px; color:#bbb; font-size: 15px; font-weight: bold;">Request a song</div>
+        <!-- تبديل قسم التواصل بقسم طلب الأغنية -->
+        <div class="request-container">
+            <div style="margin-bottom:15px; color:#bbb; font-size: 14px; font-weight: bold;">Request a song</div>
             <a href="https://t.me/ahmedib9090?text=أهلا%20يا%20أحمد%20أنا%20بسمعك%20دلوقتي%20وحابب%20أطلب%20أغنية.." target="_blank" class="request-btn">
                 <i class="fab fa-telegram"></i> طلب أغنية 🎵
             </a>
@@ -151,6 +162,7 @@
 
     <div id="disqus_thread"></div>
 
+    <!-- السكريبتات كما هي في كودك القديم -->
     <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
     <script>
         function updateTime() {
@@ -161,7 +173,8 @@
             document.getElementById("time-digits").innerText = parts[0];
             document.getElementById("time-ampm").innerText = parts[1];
         }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(updateTime, 1000);
+        updateTime();
 
         var disqus_config = function () {
             this.page.url = "https://ahmed-fm.vercel.app"; 
